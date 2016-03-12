@@ -113,8 +113,4 @@ void Heap::heapFixUpDown(int *heap) {
 Heap::~Heap()
 {
 	free(heap);
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c3d593fe43aaa2bdc39d330f2142dcc0d007b5d7
