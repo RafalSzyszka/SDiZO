@@ -4,6 +4,7 @@
 class List
 {
     public:
+		List() {} //default constructor
         List(int); //constructor with initial value
 
         List* push(int);   //add value at beginning
@@ -23,8 +24,6 @@ class List
         virtual ~List();
 
     private:
-        List() {} //default constructor
-
         List *next;
         int value;
 

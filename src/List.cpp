@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "List.h"
 
 #include <iostream>
@@ -10,6 +11,10 @@ List::List(int val) : next(nullptr), value(val)
 
 /**Adding element at the beginning of list*/
 List* List::push(int val) {
+	if (this->value == NULL) {	//if no elements in list
+		this->value = val;
+		return this;
+	} 
     List *elem = new List(val); /**Adding new element*/
     elem->next = this; /**Defining new head*/
     return elem;    /**Return new head*/
@@ -18,7 +23,9 @@ List* List::push(int val) {
 /**Adding value at specific index of list*/
 List* List::addAtIndex(int val, unsigned int index) {
     /**Checking if index is between 0 and list size*/
-    if(index > this->getSize()) throw std::string("Index out of bounds!");
+	if (index >= this->getSize()) {
+		this->addToEnd(val);	//if index is greater or equal list's size, value will be added at the list's end
+	}
     else {
         List *ptr = this;   /**List's head, 0 element to do stuff on it*/
         List *head = this;  /**Copy of head to be returned*/
@@ -60,8 +67,13 @@ void List::printList() {
 
 /**Adding elements at the end of list*/
 void List::addToEnd(int val) {
-    List *ptr = this->toEnd();  /**Goes to end of list*/
-    ptr->next = new List(val);  /**Creates new element on the very end*/
+	if (this->value == NULL) {	//if no elements in list
+		this->value = val;
+	}
+	else {
+		List *ptr = this->toEnd();  /**Goes to end of list*/
+		ptr->next = new List(val);  /**Creates new element on the very end*/
+	}
 }
 
 /**Returns number of elements inside list*/
@@ -108,6 +120,29 @@ int List::deleteFromEnd() {
     }
 
     return value;   /**Returning last value*/
+}
+/**Deletes value at given index*/
+int List::deleteAtIndex(unsigned int index, List **head) {
+	/**Checking if index is between 0 and size*/
+	if (index >= this->getSize()) {
+		return this->deleteFromEnd(); //if index is greater or equal list's size,  last element will be removed
+	}
+	else {
+		if (index == 0) return this->pop(head);	//deleting first element
+		else {
+			List *ptr = *head;
+			int value;
+			while (index > 1) {
+				ptr = ptr->next;		//skipping to element before the one to be deleted
+				index--;
+			}
+			List *tail = ptr->next->next;	//saving tail
+			value = ptr->next->value;	//getting value
+			delete(ptr->next);	//deleting list element
+			ptr->next = tail;	//adding tail
+			return value;
+		}
+	}
 }
 
 /**Checks if list is empty, depending on the list size*/
