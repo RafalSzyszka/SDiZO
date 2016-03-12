@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Heap.h"
 #include <stdlib.h>
 #include <iostream>
