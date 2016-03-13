@@ -26,12 +26,11 @@ int main()
     cout << endl << endl;
 
     heap->printHeap();
-
+    heap->pop();
+    heap->pop();
+    heap->pop();
+    heap->pop();
     cout << endl << endl;
-
-    for(unsigned int i = 0; i < 5; i++) {
-        cout << heap->pop() << " ";
-    }
 
 }
 
