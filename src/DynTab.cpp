@@ -18,7 +18,7 @@ void DynTab::addAtIndex(int value, unsigned int index) {
         throw std::string("Index out of bounds!");  /**checking index*/
     } else {
         if(index == 0) {
-                this->addAtBegin(value); /**adding at beginning*/
+                this->add(value); /**adding at beginning*/
         } else if(index == this->size) {
             this->add(value);   /**adding at end*/
         } else {
@@ -40,7 +40,7 @@ void DynTab::addAtIndex(int value, unsigned int index) {
     }
 }
 /**adds value at array's beginning*/
-void DynTab::addAtBegin(int value) {
+void DynTab::add(int value) {
     DynTab *dt = this;  /**pointer used to do operations*/
     int *newTab = (int*)malloc((dt->size+1)*sizeof(int));   /**allocates new memory block*/
     newTab[0] = value;  /**adding value at the very beginning*/
@@ -53,7 +53,7 @@ void DynTab::addAtBegin(int value) {
 }
 
 /**Adds value at the end of array, allocates more memory*/
-void DynTab::add(int value) {
+void DynTab::addAtEnd(int value) {
     DynTab *dt = this;  /**used to do operations*/
     void *tmp;
     /**trying to reallocate memory*/
@@ -66,6 +66,12 @@ void DynTab::add(int value) {
     }
 }
 
+void DynTab::print() {
+    for(int i = 0; i < this->size; i++) {
+        std::cout << this->tab[i] << " ";
+    }
+}
+
 /**return value at specific index, does not delete value*/
 int DynTab::getIndex(unsigned int index) {
     if(index >= this->size) {
@@ -75,7 +81,7 @@ int DynTab::getIndex(unsigned int index) {
     }
 }
 
-int DynTab::deleteIndex(unsigned int index) {
+int DynTab::deleteAtIndex(unsigned int index) {
     return 0;
 }
 
@@ -119,6 +125,14 @@ int DynTab::deleteLast() {
     } else { /**if array is empty throws exception*/
         throw std::string("No elements to be deleted!");
     }
+}
+
+/**Searches for value in array*/
+bool DynTab::findValue(int value) {
+    for(int i = 0; i < this->size; i++) {
+        if(this->tab[i] == value) return true;
+    }
+    return false;
 }
 
 DynTab::~DynTab()
