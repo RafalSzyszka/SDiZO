@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "List.h"
 
 #include <iostream>
@@ -10,11 +9,11 @@ List::List(int val) : next(nullptr), value(val)
 {}
 
 /**Adding element at the beginning of list*/
-List* List::push(int val) {
+List* List::add(int val) {
 	if (this->value == NULL) {	//if no elements in list
 		this->value = val;
 		return this;
-	} 
+	}
     List *elem = new List(val); /**Adding new element*/
     elem->next = this; /**Defining new head*/
     return elem;    /**Return new head*/
@@ -24,14 +23,14 @@ List* List::push(int val) {
 List* List::addAtIndex(int val, unsigned int index) {
     /**Checking if index is between 0 and list size*/
 	if (index >= this->getSize()) {
-		this->addToEnd(val);	//if index is greater or equal list's size, value will be added at the list's end
+		return this->addAtEnd(val);	//if index is greater or equal list's size, value will be added at the list's end
 	}
     else {
         List *ptr = this;   /**List's head, 0 element to do stuff on it*/
         List *head = this;  /**Copy of head to be returned*/
 
         /**0 is list's first element*/
-        if(index == 0) return ptr->push(val);   /**Adding at beginning*/
+        if(index == 0) return ptr->add(val);   /**Adding at beginning*/
 
         else {      /**Adding at another place in list*/
             while(index > 1) {
@@ -57,7 +56,7 @@ List* List::addAtIndex(int val, unsigned int index) {
 }
 
 /**Prints list on the standard output*/
-void List::printList() {
+void List::print() {
     List *ptr = this;
     while(ptr != NULL) {    /**While there are elements in list*/
         std::cout << ptr->value << " ";
@@ -66,13 +65,16 @@ void List::printList() {
 }
 
 /**Adding elements at the end of list*/
-void List::addToEnd(int val) {
+List* List::addAtEnd(int val) {
 	if (this->value == NULL) {	//if no elements in list
 		this->value = val;
+		return this;
 	}
 	else {
+        List *head = this;
 		List *ptr = this->toEnd();  /**Goes to end of list*/
 		ptr->next = new List(val);  /**Creates new element on the very end*/
+        return head;
 	}
 }
 
@@ -91,8 +93,8 @@ unsigned int List::getSize() {
 }
 
 /**deletes first element and returns it's value*/
-int List::pop(List **head) {
-    List *ptr = (*head);    /**Copying head*/
+int List::deleteFirst(Structure** head) {
+    List *ptr = (List*)*head;    /**Copying head*/
     int value = ptr->value;     /**Getting value that will be returned*/
 
     if(ptr->next != nullptr) {
@@ -106,7 +108,7 @@ int List::pop(List **head) {
 }
 
 /**Deletes element at list's end and returns it's value*/
-int List::deleteFromEnd() {
+int List::deleteLast() {
     List *newLast = this->toLastButOne();   /**pointing to last but one element*/
     int value;
 
@@ -122,15 +124,15 @@ int List::deleteFromEnd() {
     return value;   /**Returning last value*/
 }
 /**Deletes value at given index*/
-int List::deleteAtIndex(unsigned int index, List **head) {
+int List::deleteAtIndex(unsigned int index, Structure** head) {
 	/**Checking if index is between 0 and size*/
 	if (index >= this->getSize()) {
-		return this->deleteFromEnd(); //if index is greater or equal list's size,  last element will be removed
+		return this->deleteLast(); //if index is greater or equal list's size,  last element will be removed
 	}
 	else {
-		if (index == 0) return this->pop(head);	//deleting first element
+		if (index == 0) return this->deleteFirst(head);	//deleting first element
 		else {
-			List *ptr = *head;
+			List *ptr = (List*)*head;
 			int value;
 			while (index > 1) {
 				ptr = ptr->next;		//skipping to element before the one to be deleted
@@ -143,6 +145,19 @@ int List::deleteAtIndex(unsigned int index, List **head) {
 			return value;
 		}
 	}
+}
+/**searches for specific value*/
+bool List::findValue(int value) {
+    List *ptr = this;
+    if(ptr->value == NULL) {
+        return false;
+    } else {
+        while(ptr->next != nullptr) {
+            if(ptr->value == value) return true;
+            else ptr = ptr->next;
+        }
+        return false;
+    }
 }
 
 /**Checks if list is empty, depending on the list size*/

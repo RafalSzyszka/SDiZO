@@ -1,26 +1,27 @@
 #ifndef LIST_H
 #define LIST_H
 
-class List
+#include "Structure.h"
+
+class List : public Structure
 {
     public:
 		List() {} //default constructor
         List(int); //constructor with initial value
 
-        List* push(int);   //add value at beginning
+        List* add(int);   //add value at beginning
         List* addAtIndex(int, unsigned int);     //adds value at specific index of list
+        List* addAtEnd(int);    //add to end of list
 
-        void printList();   //print list
-        void addToEnd(int);    //add to end of list
+        void print();   //print list
 
         unsigned int getSize();     //return size of list
-        int pop(List**);      //deletes first element and returns it's value
-        int deleteFromEnd();    //deletes last element and returns it's value
-        int deleteAtIndex(unsigned int, List**);    //deletes specific element and returns it's value
-        int deleteFirstOf(int value, List**);       //deletes first ap of value
+        int deleteFirst(Structure**);      //deletes first element and returns it's value
+        int deleteLast();    //deletes last element and returns it's value
+        int deleteAtIndex(unsigned int, Structure**);    //deletes specific element and returns it's value
 
         bool isEmpty();     //return true if list is empty, otherwise false
-
+        bool findValue(int);    //searches for specific value
         virtual ~List();
 
     private:
