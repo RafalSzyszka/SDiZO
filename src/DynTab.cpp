@@ -24,7 +24,7 @@ void DynTab::addAtIndex(int value, unsigned int index) {
         } else {
             DynTab *dt = this;  /**pointer used to do operations on*/
             int *newTab = (int*)malloc((dt->size+1)*sizeof(int));   /**reserving new memory*/
-            for(int i = 0; i < dt->size+1; i++) {   /**copying old data*/
+            for(unsigned int i = 0; i < dt->size+1; i++) {   /**copying old data*/
                 if(i < index) { /**first half of array*/
                     newTab[i] = dt->tab[i];
                 } else if(i > index) {  /**second half of array*/
@@ -44,7 +44,7 @@ void DynTab::add(int value) {
     DynTab *dt = this;  /**pointer used to do operations*/
     int *newTab = (int*)malloc((dt->size+1)*sizeof(int));   /**allocates new memory block*/
     newTab[0] = value;  /**adding value at the very beginning*/
-    for(int i = 1; i < dt->size+1; i++) { /**Copying old data*/
+    for(unsigned int i = 1; i < dt->size+1; i++) { /**Copying old data*/
         newTab[i] = dt->tab[i-1];
     }
     free(dt->tab);  /**deleting old data*/
@@ -67,7 +67,7 @@ void DynTab::addAtEnd(int value) {
 }
 
 void DynTab::print() {
-    for(int i = 0; i < this->size; i++) {
+    for(unsigned int i = 0; i < this->size; i++) {
         std::cout << this->tab[i] << " ";
     }
 }
@@ -129,7 +129,7 @@ int DynTab::deleteLast() {
 
 /**Searches for value in array*/
 bool DynTab::findValue(int value) {
-    for(int i = 0; i < this->size; i++) {
+    for(unsigned int i = 0; i < this->size; i++) {
         if(this->tab[i] == value) return true;
     }
     return false;
