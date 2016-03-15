@@ -13,14 +13,14 @@ DynTab::DynTab() : size(0), tab() {}
 DynTab::DynTab(unsigned int s) : size(s), tab((int *)calloc(s,sizeof(int))) {}
 
 /**adds value at specific index*/
-void DynTab::addAtIndex(int value, unsigned int index) {
+DynTab* DynTab::addAtIndex(int value, unsigned int index) {
     if(index > this->size) {
         throw std::string("Index out of bounds!");  /**checking index*/
     } else {
         if(index == 0) {
-                this->add(value); /**adding at beginning*/
+            return this->add(value); /**adding at beginning*/
         } else if(index == this->size) {
-            this->add(value);   /**adding at end*/
+            return this->addAtEnd(value);   /**adding at end*/
         } else {
             DynTab *dt = this;  /**pointer used to do operations on*/
             int *newTab = (int*)malloc((dt->size+1)*sizeof(int));   /**reserving new memory*/
@@ -36,11 +36,12 @@ void DynTab::addAtIndex(int value, unsigned int index) {
             free(dt->tab); /**freeing old array*/
             dt->tab = newTab;   /**setting new array*/
             dt->size++;     /**increasing array size*/
+            return dt;
         }
     }
 }
 /**adds value at array's beginning*/
-void DynTab::add(int value) {
+DynTab* DynTab::add(int value) {
     DynTab *dt = this;  /**pointer used to do operations*/
     int *newTab = (int*)malloc((dt->size+1)*sizeof(int));   /**allocates new memory block*/
     newTab[0] = value;  /**adding value at the very beginning*/
@@ -50,10 +51,11 @@ void DynTab::add(int value) {
     free(dt->tab);  /**deleting old data*/
     dt->tab = newTab;   /**setting new data*/
     dt->size++;     /**increasing array size*/
+    return dt;
 }
 
 /**Adds value at the end of array, allocates more memory*/
-void DynTab::addAtEnd(int value) {
+DynTab* DynTab::addAtEnd(int value) {
     DynTab *dt = this;  /**used to do operations*/
     void *tmp;
     /**trying to reallocate memory*/
@@ -61,6 +63,7 @@ void DynTab::addAtEnd(int value) {
         dt->tab = (int*)tmp;    /**previous tab was already freed by realloc, setting copied and enlarged memory block*/
         dt->tab[dt->size] = value;  /**adding value at the end*/
         dt->size++; /**increasing size*/
+        return dt;
     } else {    /**throw string if something went wrong*/
         throw std::string("Error occurred while reallocating memory!\nNo changes were done.");
     }
@@ -81,13 +84,13 @@ int DynTab::getIndex(unsigned int index) {
     }
 }
 
-int DynTab::deleteAtIndex(unsigned int index) {
+int DynTab::deleteAtIndex(unsigned int index, DynTab** d) {
     return 0;
 }
 
 /**Deletes and returns array's first value
 *resizes table*/
-int DynTab::deleteFirst() {
+int DynTab::deleteFirst(DynTab** d) {
     DynTab *dt = this;  /**pointer used to do operations on object*/
     int value = dt->tab[0];     /**getting value to be returned*/
     int *newTab = (int*)malloc((dt->size-1)*sizeof(int));     /**allocating new memory block*/

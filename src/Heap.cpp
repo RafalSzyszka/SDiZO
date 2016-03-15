@@ -16,7 +16,7 @@ void Heap::print() {
 }
 
 /**adds value to heap, fixes it if neccessary*/
-void Heap::add(int value) {
+Heap* Heap::add(int value) {
 	int *newHeap;
 	/**copying previous content*/
 	if ((newHeap = (int*)realloc(this->heap, (this->size + 1)*sizeof(int))) != NULL) {
@@ -24,20 +24,23 @@ void Heap::add(int value) {
 		this->heap = newHeap;
 		this->size++;
 		heapFixDownUp(this->heap, this->size);	//fixing heap
+		return this;
+	} else {
+        return this;
 	}
 }
 /**adds value to heap*/
-void Heap::addAtEnd(int value) {
-    this->add(value);
+Heap* Heap::addAtEnd(int value) {
+    return this->add(value);
 }
 
 /**adds value to heap*/
-void Heap::addAtIndex(int value, unsigned int index) {
-    this->add(value);
+Heap* Heap::addAtIndex(int value, unsigned int index) {
+    return this->add(value);
 }
 
 /**removing heap's node*/
-int Heap::deleteFirst() {
+int Heap::deleteFirst(Structure** h) {
 	int popValue = this->heap[0];
 	int *newHeap = (int*)malloc((this->size - 1)*sizeof(int)); //locating new memory
 
@@ -59,7 +62,7 @@ int Heap::deleteLast() {
     return this->deleteFirst();
 }
  /**removes heap's node*/
-int Heap::deleteAtIndex(unsigned int index) {
+int Heap::deleteAtIndex(unsigned int index, Structure** h) {
     return this->deleteFirst();
 }
 

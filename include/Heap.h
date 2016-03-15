@@ -3,6 +3,7 @@
 
 #include "Structure.h"
 
+
 class Heap : public Structure
 {
 public:
@@ -11,13 +12,13 @@ public:
 
 	void print();	//prints heap
 
-	void add(int); //adds value to heap
-	void addAtEnd(int); //same as add method
-	void addAtIndex(int, unsigned int); //adds value at specified index. not used!
+	Heap* add(int); //adds value to heap
+	Heap* addAtEnd(int); //same as add method
+	Heap* addAtIndex(int, unsigned int); //adds value at specified index. not used!
 
-	int deleteFirst();      //removes and returns heap's root value
+	int deleteFirst(Structure** = nullptr);      //removes and returns heap's root value
 	int deleteLast();       //same as delete first
-	int deleteAtIndex(unsigned int);    //not used in heap!
+	int deleteAtIndex(unsigned int, Structure** = nullptr);    //not used in heap!
 
 	unsigned int getSize() { return size; }		//returns heap size
 	bool findValue(int);	//searches for value
