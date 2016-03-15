@@ -9,14 +9,14 @@ Heap::Heap(int value) : heap((int*)malloc(sizeof(int))), size(1) {
 }
 
 /**Prints heap content*/
-void Heap::printHeap() {
+void Heap::print() {
 	for (unsigned int i = 0; i < this->size; i++) {
 		std::cout << this->heap[i] << " ";
 	}
 }
 
 /**adds value to heap, fixes it if neccessary*/
-void Heap::push(int value) {
+void Heap::add(int value) {
 	int *newHeap;
 	/**copying previous content*/
 	if ((newHeap = (int*)realloc(this->heap, (this->size + 1)*sizeof(int))) != NULL) {
@@ -26,9 +26,18 @@ void Heap::push(int value) {
 		heapFixDownUp(this->heap, this->size);	//fixing heap
 	}
 }
+/**adds value to heap*/
+void Heap::addAtEnd(int value) {
+    this->add(value);
+}
+
+/**adds value to heap*/
+void Heap::addAtIndex(int value, unsigned int index) {
+    this->add(value);
+}
 
 /**removing heap's node*/
-int Heap::pop() {
+int Heap::deleteFirst() {
 	int popValue = this->heap[0];
 	int *newHeap = (int*)malloc((this->size - 1)*sizeof(int)); //locating new memory
 
@@ -45,10 +54,18 @@ int Heap::pop() {
 
 	return popValue;	//returning old node's value
 }
+/**removes heap's node*/
+int Heap::deleteLast() {
+    return this->deleteFirst();
+}
+ /**removes heap's node*/
+int Heap::deleteAtIndex(unsigned int index) {
+    return this->deleteFirst();
+}
 
 /**Search for value in heap, returns true if value is in the heap, false if value does not appear in heap*/
 bool Heap::findValue(int value) {
-	for (int i = 0; i < this->size; i++) {
+	for (unsigned int i = 0; i < this->size; i++) {
 		if (this->heap[i] == value) {
 			return true;
 		}
@@ -71,9 +88,9 @@ void Heap::heapFixDownUp(int *heap, int size) {
 
 /**fixing heap after poping node*/
 void Heap::heapFixUpDown(int *heap) {
-	int node, left, right;
+	unsigned int node, left, right;
 	node = 0;
-	
+
 	while ( (left=(2*node+1)) < this->getSize() ) { //while node has at least one child
 		if ((right = left+1) < this->getSize()) {	//if node has both children
 			if (heap[node] < heap[left] || heap[node] < heap[right]) {	//if node is smaller than one of its child

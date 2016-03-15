@@ -1,19 +1,26 @@
 #ifndef HEAP_H
 #define HEAP_H
 
+#include "Structure.h"
 
-class Heap
+class Heap : public Structure
 {
 public:
 	Heap() : heap(nullptr), size(0) {}  //default constructor
 	Heap(int);      //constructor with initial heap value
 
-	void printHeap();	//prints heap
+	void print();	//prints heap
 
-	void push(int); //adds value to heap
-	int pop();      //removes and returns heap's root value
+	void add(int); //adds value to heap
+	void addAtEnd(int); //same as add method
+	void addAtIndex(int, unsigned int); //adds value at specified index. not used!
+
+	int deleteFirst();      //removes and returns heap's root value
+	int deleteLast();       //same as delete first
+	int deleteAtIndex(unsigned int);    //not used in heap!
+
 	unsigned int getSize() { return size; }		//returns heap size
-	bool findValue(int);	//searchs for value
+	bool findValue(int);	//searches for value
 
 	virtual ~Heap();
 
