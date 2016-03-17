@@ -21,7 +21,7 @@ public:
 	int deleteAtIndex(unsigned int, Structure** = nullptr);    //not used in heap!
 
 	unsigned int getSize() { return size; }		//returns heap size
-	bool findValue(int);	//searches for value
+	bool findValue(int);    //searches for specific value
 
 	virtual ~Heap();
 

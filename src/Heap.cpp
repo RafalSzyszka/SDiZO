@@ -67,11 +67,9 @@ int Heap::deleteAtIndex(unsigned int index, Structure** h) {
 }
 
 /**Search for value in heap, returns true if value is in the heap, false if value does not appear in heap*/
-bool Heap::findValue(int value) {
-	for (unsigned int i = 0; i < this->size; i++) {
-		if (this->heap[i] == value) {
-			return true;
-		}
+bool Heap::findValue(int val){
+	for(unsigned int i = 0; i < size; i++) {
+        if(this->heap[i] == val) return true;
 	}
 	return false;
 }

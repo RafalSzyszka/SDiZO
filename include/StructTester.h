@@ -29,6 +29,18 @@ class StructTester
         void printDTab();
         void printRbTr();
 
+        void setStructures(Structure*,Structure*,Structure*,Structure*);
+        void setList(Structure*);
+        void setHeap(Structure*);
+        void setDtab(Structure*);
+        void setRbtr(Structure*);
+
+        void clearStructures();
+        void clearList();
+        void clearHeap();
+        void clearDtab();
+        void clearRBtr();
+
         virtual ~StructTester();
 
     private:
