@@ -15,6 +15,8 @@ class Structure
 
         virtual void print()=0;     //printing structure
         virtual bool findValue(int)=0;  //searches for value
+
+        virtual ~Structure();
 };
 
 #endif // STRUCTURE_H
