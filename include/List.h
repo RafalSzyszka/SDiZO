@@ -6,7 +6,7 @@
 class List : public Structure
 {
     public:
-		List() {} //default constructor
+		List() : next(nullptr) {} //default constructor
         List(int); //constructor with initial value
 
         List* add(int);   //add value at beginning

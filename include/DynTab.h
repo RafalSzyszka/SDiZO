@@ -16,8 +16,8 @@ class DynTab : public Structure
 
         unsigned int getSize() {return size;}
         int getIndex(unsigned int);     //gets value not deleting it
-        int deleteAtIndex(unsigned int, DynTab** = nullptr);   //deletes value at specific index and resizes table
-        int deleteFirst(DynTab** = nullptr);  //deletes and returns first value
+        int deleteAtIndex(unsigned int, Structure** = nullptr);   //deletes value at specific index and resizes table
+        int deleteFirst(Structure** = nullptr);  //deletes and returns first value
         int deleteLast();   //deletes and returns last value
 
         bool findValue(int);    //searches for specific value

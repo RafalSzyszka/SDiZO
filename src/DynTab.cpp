@@ -84,13 +84,13 @@ int DynTab::getIndex(unsigned int index) {
     }
 }
 
-int DynTab::deleteAtIndex(unsigned int index, DynTab** d) {
+int DynTab::deleteAtIndex(unsigned int index, Structure** d) {
     return 0;
 }
 
 /**Deletes and returns array's first value
 *resizes table*/
-int DynTab::deleteFirst(DynTab** d) {
+int DynTab::deleteFirst(Structure** d) {
     DynTab *dt = this;  /**pointer used to do operations on object*/
     int value = dt->tab[0];     /**getting value to be returned*/
     int *newTab = (int*)malloc((dt->size-1)*sizeof(int));     /**allocating new memory block*/
