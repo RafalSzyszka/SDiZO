@@ -6,7 +6,7 @@
 class List : public Structure
 {
     public:
-		List() : next(nullptr) {} //default constructor
+		List() : next(nullptr), value(-2147483647){} //default constructor
         List(int); //constructor with initial value
 
         List* add(int);   //add value at beginning
@@ -22,6 +22,7 @@ class List : public Structure
 
         bool isEmpty();     //return true if list is empty, otherwise false
         bool findValue(int);    //searches for specific value
+        int get(unsigned int);
         virtual ~List();
 
     private:

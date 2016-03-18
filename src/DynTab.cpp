@@ -76,7 +76,7 @@ void DynTab::print() {
 }
 
 /**return value at specific index, does not delete value*/
-int DynTab::getIndex(unsigned int index) {
+int DynTab::get(unsigned int index) {
     if(index >= this->size) {
         throw std::string("Index out of bounds!");
     } else {

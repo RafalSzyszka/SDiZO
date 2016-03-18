@@ -18,6 +18,90 @@ StructTester::StructTester() :
 StructTester::StructTester(Structure* l, Structure* h, Structure* dt, Structure* rbt) :
     list(l), heap(h), dtab(dt), rbtree(rbt) { }
 
+/**tests adding at begin method for all structures same time,
+creates/opens files named as structure class, write state before adding, adding value and state after addition*/
+void StructTester::testAddAll(int value) {
+    preOperationFile(list, "listAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
+    list = list->add(value);
+    afterOperationFile(list, "listAddTests.txt", 0, 5);
+
+    preOperationFile(heap,"heapAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
+    heap->add(value);
+    afterOperationFile(heap, "heapAddTests.txt", 0, 5);
+
+    preOperationFile(dtab, "DTabAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
+    dtab->add(value);
+    afterOperationFile(dtab, "DTabAddTests.txt", 0, 5);
+    //testAddingWriteToFile("RBTrAddTests.txt", rbtree, value);
+}
+
+/**tests adding at end method for all structures same time,
+creates/opens files named as structure class, write state before adding, adding value and state after addition*/
+void StructTester::testAddAtEndAll(int value) {
+    preOperationFile(list, "listAddAtEndTests.txt", "dodawania na koncu", value, NULL, list->getSize() -6, list->getSize());
+    list = list->addAtEnd(value);
+    afterOperationFile(list, "listAddAtEndTests.txt", list->getSize() -6, list->getSize());
+
+    preOperationFile(dtab, "DTabAddAtEndTests.txt", "dodawania na koncu", value, NULL, dtab->getSize() -6, dtab->getSize());
+    dtab->addAtEnd(value);
+    afterOperationFile(dtab, "DTabAddAtEndTests.txt", dtab->getSize() -6, dtab->getSize());
+
+}
+
+/**tests adding at index method for all structures same time,
+creates/opens files named as structure class, write state before adding, adding value and state after addition*/
+void StructTester::testAddAtIndexAll(int value, unsigned int index) {
+    preOperationFile(list, "listAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index-3, index+3);
+    list = list->addAtIndex(value, index);
+    afterOperationFile(list, "listAddAtIndexTests.txt", index-3, index+4);
+
+    preOperationFile(dtab, "DTabAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index-3, index+3);
+    dtab->addAtIndex(value, index);
+    afterOperationFile(dtab, "DTabAddAtIndexTests.txt", index-3, index+4);
+}
+
+void StructTester::testAddList(int value) {
+    preOperationFile(list, "listAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
+    list = list->add(value);
+    afterOperationFile(list, "listAddTests.txt", 0, 5);
+}
+
+void StructTester::testAddHeap(int value) {
+    preOperationFile(heap, "heapAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
+    heap->add(value);
+    afterOperationFile(heap, "heapAddTests.txt", 0, 5);
+}
+
+void StructTester::testAddDTab(int value) {
+    preOperationFile(dtab,"DTabAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
+    dtab->add(value);
+    afterOperationFile(dtab, "DTabAddTests.txt", 0, 5);
+}
+
+void StructTester::testAddAtEndList(int value) {
+    preOperationFile(list, "listAddAtEndTests.txt", "dodawania na koncu", value, 0, list->getSize() -6, list->getSize());
+    list = list->addAtEnd(value);
+    afterOperationFile(list, "listAddAtEndTests.txt", list->getSize() -6, list->getSize());
+}
+
+void StructTester::testAddAtIndexList(int value, unsigned int index) {
+    preOperationFile(list, "listAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index-3, index+3);
+    list = list->addAtIndex(value, index);
+    afterOperationFile(list, "listAddAtIndexTests.txt", index-3, index+4);
+}
+
+void StructTester::testAddAtIndexDTab(int value, unsigned int index) {
+    preOperationFile(dtab, "DTabAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index-3, index+3);
+    dtab->addAtIndex(value, index);
+    afterOperationFile(dtab, "DTabAddAtIndexTests.txt", index-3, index+4);
+}
+
+void StructTester::testAddAtEndDTab(int value) {
+    preOperationFile(dtab, "DTabAddAtEndTests.txt", "dodawania na koncu", value, NULL, dtab->getSize() -6, dtab->getSize());
+    dtab->addAtEnd(value);
+    afterOperationFile(dtab, "DTabAddAtEndTests.txt", dtab->getSize() -6, dtab->getSize());
+}
+
 /**initialize structures with values from file*/
 void StructTester::fillStructuresFromFile(std::string filePath) {
     std::string line;
@@ -124,4 +208,40 @@ StructTester::~StructTester()
     delete(heap);
     delete(dtab);
     delete(rbtree);
+}
+
+void StructTester::preOperationFile(Structure* st, std::string filename, std::string where, int value, unsigned int index, unsigned int begin, unsigned int end) {
+    std::ofstream flist;
+    flist.open(filename, std::ios::out | std::ios::app);
+    if(flist.is_open()) {
+        flist << "Testowanie " << where << " struktury.\nStan struktury:\n\n... ";
+        std::cout << "Testowanie " << where << " struktury.\nStan struktury:\n\n... ";
+        for(unsigned int i = begin; i < end; i++) {
+            flist << st->get(i) << " ";
+            std::cout << st->get(i) << " ";
+        }
+        flist << "\n\n";
+        flist << "Wartosc: " << value << "  index: " << index << "\n\nStan struktury po operacji:\n\n... ";
+        std::cout << "\n\n";
+        std::cout << "Wartosc: " << value << "  index: " << index << "\n\nStan struktury po operacji:\n\n... ";
+        flist.close();
+    } else {
+        std::cout << "Blad podczas otwierania pliku" << std::endl;
+    }
+}
+
+void StructTester::afterOperationFile(Structure* st, std::string filename, unsigned int begin, unsigned int end) {
+    std::ofstream flist;
+    flist.open(filename, std::ios::out | std::ios::app);
+    if(flist.is_open()) {
+        for(unsigned int i = begin; i < end; i++) {
+                flist << st->get(i) << " ";
+                std::cout << st->get(i) << " ";
+            }
+            flist << "\n\n\n";
+            std::cout << "\n\n\n";
+            flist.close();
+    } else {
+        std::cout << "Blad podczas otwierania pliku!" << std::endl;
+    }
 }

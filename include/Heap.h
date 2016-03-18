@@ -19,6 +19,7 @@ public:
 	int deleteFirst(Structure** = nullptr);      //removes and returns heap's root value
 	int deleteLast();       //same as delete first
 	int deleteAtIndex(unsigned int, Structure** = nullptr);    //not used in heap!
+	int get(unsigned int);
 
 	unsigned int getSize() { return size; }		//returns heap size
 	bool findValue(int);    //searches for specific value

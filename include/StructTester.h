@@ -12,15 +12,43 @@ class StructTester
         StructTester();
         StructTester(Structure*, Structure*, Structure*, Structure*);
 
-        void testAdd(int);
-        void testAddAtEnd(int);
-        void testAddAtIndex(int, unsigned int);
+        void testAddAll(int);   //
+        void testAddAtEndAll(int);  //
+        void testAddAtIndexAll(int, unsigned int);  //
 
-        void testDeleteFirst();
-        void testDeleteLast();
-        void testDeleteAtIndex(unsigned int);
+        void testAddList(int);  //
+        void testAddAtEndList(int); //
+        void testAddAtIndexList(int, unsigned int); //
 
-        void testFindValue(int);
+        void testAddHeap(int);  //
+
+        void testAddDTab(int);  //
+        void testAddAtEndDTab(int); //
+        void testAddAtIndexDTab(int, unsigned int); //
+
+        void testAddRBTr(int);
+
+        void testDeleteFirstAll();
+        void testDeleteLastAll();
+        void testDeleteAtIndexAll(unsigned int);
+
+        void testDeleteFirstList();
+        void testDeleteLastList();
+        void testDeleteAtIndexList(unsigned int);
+
+        void testDeleteFirstHeap();
+
+        void testDeleteFirstDTab();
+        void testDeleteLastDTab();
+        void testDeleteAtIndexDTab(unsigned int);
+
+        void testDeleteFirstRBTr();
+
+        void testFindValueAll(int);
+        void testFindValueList(int);
+        void testFindValueHeap(int);
+        void testFindValueDTab(int);
+        void testFindValueRBTr(int);
 
         void fillStructuresFromFile(std::string);
 
@@ -48,6 +76,10 @@ class StructTester
         Structure* heap;
         Structure* dtab;
         Structure* rbtree;
+
+        void preOperationFile(Structure*, std::string, std::string, int, unsigned int, unsigned int, unsigned int);
+        void afterOperationFile(Structure*, std::string, unsigned int, unsigned int);
+
 };
 
 #endif // STRUCTTESTER_H

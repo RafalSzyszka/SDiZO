@@ -39,6 +39,14 @@ Heap* Heap::addAtIndex(int value, unsigned int index) {
     return this->add(value);
 }
 
+int Heap::get(unsigned int index) {
+    if(index >= this->size) {
+        return NULL;
+    } else {
+        return this->heap[index];
+    }
+}
+
 /**removing heap's node*/
 int Heap::deleteFirst(Structure** h) {
 	int popValue = this->heap[0];

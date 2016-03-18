@@ -10,13 +10,15 @@ List::List(int val) : next(nullptr), value(val)
 
 /**Adding element at the beginning of list*/
 List* List::add(int val) {
-	if (this->value == NULL) {	//if no elements in list
+	if(this->value == -2147483647) {	//if no elements in list
 		this->value = val;
 		return this;
+	} else {
+        List *elem = new List(val); /**Adding new element*/
+        elem->next = this; /**Defining new head*/
+        return elem;    /**Return new head*/
 	}
-    List *elem = new List(val); /**Adding new element*/
-    elem->next = this; /**Defining new head*/
-    return elem;    /**Return new head*/
+
 }
 
 /**Adding value at specific index of list*/
@@ -66,7 +68,7 @@ void List::print() {
 
 /**Adding elements at the end of list*/
 List* List::addAtEnd(int val) {
-	if (this->value == NULL) {	//if no elements in list
+	if(this->value == -2147483647) {	//if no elements in list
 		this->value = val;
 		return this;
 	}
@@ -82,7 +84,7 @@ List* List::addAtEnd(int val) {
 unsigned int List::getSize() {
     List *ptr = this;
     unsigned int size = 0;
-    if(ptr == NULL) return 0;     /**Checking if list is empty, if true then return 0 as size*/
+    if(ptr->value == -2147483647 && ptr->next == nullptr) return 0;     /**Checking if list is empty, if true then return 0 as size*/
     else {
         while(ptr->next != nullptr) {
             size++;             /**Counting elements*/
@@ -149,7 +151,7 @@ int List::deleteAtIndex(unsigned int index, Structure** head) {
 /**searches for specific value*/
 bool List::findValue(int value) {
     List *ptr = this;
-    if(ptr->value == NULL) {
+    if(ptr->value == -2147483647) {
         return false;
     } else {
         while(ptr->next != nullptr) {
@@ -164,6 +166,20 @@ bool List::findValue(int value) {
 bool List::isEmpty() {
     if(this->getSize() == 0) return true;
     else return false;
+}
+
+/**return value at specified index*/
+int List::get(unsigned int index) {
+    if(index >= this->getSize()) {
+        return NULL;
+    } else {
+        List *ptr = this;
+        while(index > 0) {
+            ptr = ptr->next;
+            index--;
+        }
+        return ptr->value;
+    }
 }
 
 List::~List()
