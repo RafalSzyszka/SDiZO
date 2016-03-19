@@ -28,19 +28,19 @@ class StructTester
 
         void testAddRBTr(int);
 
-        void testDeleteFirstAll();
-        void testDeleteLastAll();
-        void testDeleteAtIndexAll(unsigned int);
+        void testDeleteFirstAll(); //
+        void testDeleteLastAll();//
+        void testDeleteAtIndexAll(unsigned int);//
 
-        void testDeleteFirstList();
-        void testDeleteLastList();
-        void testDeleteAtIndexList(unsigned int);
+        void testDeleteFirstList(); //
+        void testDeleteLastList();//
+        void testDeleteAtIndexList(unsigned int);//
 
-        void testDeleteFirstHeap();
+        void testDeleteFirstHeap();//
 
-        void testDeleteFirstDTab();
-        void testDeleteLastDTab();
-        void testDeleteAtIndexDTab(unsigned int);
+        void testDeleteFirstDTab();//
+        void testDeleteLastDTab();//
+        void testDeleteAtIndexDTab(unsigned int);//
 
         void testDeleteFirstRBTr();
 
@@ -50,7 +50,7 @@ class StructTester
         void testFindValueDTab(int);
         void testFindValueRBTr(int);
 
-        void fillStructuresFromFile(std::string);
+        void fillStructuresFromFile(std::string);/**/
 
         void printList();
         void printHeap();

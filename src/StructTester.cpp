@@ -21,85 +21,402 @@ StructTester::StructTester(Structure* l, Structure* h, Structure* dt, Structure*
 /**tests adding at begin method for all structures same time,
 creates/opens files named as structure class, write state before adding, adding value and state after addition*/
 void StructTester::testAddAll(int value) {
-    preOperationFile(list, "listAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
-    list = list->add(value);
-    afterOperationFile(list, "listAddTests.txt", 0, 5);
+    std::cout << "\nLISTA:\n";
+    if(list->getSize() <= 10) {
+        preOperationFile(list, "listAddTests.txt", "dodawania na poczatku", value, 0, 0, list->getSize());
+        list = list->add(value);
+        afterOperationFile(list, "listAddTests.txt", 0, list->getSize());
+    } else {
+        preOperationFile(list, "listAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
+        list = list->add(value);
+        afterOperationFile(list, "listAddTests.txt", 0, 5);
+    }
 
-    preOperationFile(heap,"heapAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
-    heap->add(value);
-    afterOperationFile(heap, "heapAddTests.txt", 0, 5);
+    std::cout << "\nKOPIEC:\n";
+    if(heap->getSize() <= 10) {
+        preOperationFile(heap,"heapAddTests.txt", "dodawania na poczatku", value, 0, 0, heap->getSize());
+        heap->add(value);
+        afterOperationFile(heap, "heapAddTests.txt", 0, heap->getSize());
+    } else {
+        preOperationFile(heap,"heapAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
+        heap->add(value);
+        afterOperationFile(heap, "heapAddTests.txt", 0, 5);
+    }
 
-    preOperationFile(dtab, "DTabAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
-    dtab->add(value);
-    afterOperationFile(dtab, "DTabAddTests.txt", 0, 5);
-    //testAddingWriteToFile("RBTrAddTests.txt", rbtree, value);
+    std::cout << "\nTABLICA DYNAMICZNA:\n";
+    if(dtab->getSize() <= 10) {
+        preOperationFile(dtab, "DTabAddTests.txt", "dodawania na poczatku", value, 0, 0, dtab->getSize());
+        dtab->add(value);
+        afterOperationFile(dtab, "DTabAddTests.txt", 0, dtab->getSize());
+    } else {
+        preOperationFile(dtab, "DTabAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
+        dtab->add(value);
+        afterOperationFile(dtab, "DTabAddTests.txt", 0, 5);
+    }
+
 }
 
 /**tests adding at end method for all structures same time,
 creates/opens files named as structure class, write state before adding, adding value and state after addition*/
 void StructTester::testAddAtEndAll(int value) {
-    preOperationFile(list, "listAddAtEndTests.txt", "dodawania na koncu", value, NULL, list->getSize() -6, list->getSize());
-    list = list->addAtEnd(value);
-    afterOperationFile(list, "listAddAtEndTests.txt", list->getSize() -6, list->getSize());
+    std::cout << "\nLISTA:\n";
+    if(dtab->getSize() <= 10) {
+        preOperationFile(list, "listAddAtEndTests.txt", "dodawania na koncu", value, NULL, 0, list->getSize());
+        list = list->addAtEnd(value);
+        afterOperationFile(list, "listAddAtEndTests.txt", 0, list->getSize());
+    } else {
+        preOperationFile(list, "listAddAtEndTests.txt", "dodawania na koncu", value, NULL, list->getSize() -6, list->getSize());
+        list = list->addAtEnd(value);
+        afterOperationFile(list, "listAddAtEndTests.txt", list->getSize() -6, list->getSize());
+    }
 
-    preOperationFile(dtab, "DTabAddAtEndTests.txt", "dodawania na koncu", value, NULL, dtab->getSize() -6, dtab->getSize());
-    dtab->addAtEnd(value);
-    afterOperationFile(dtab, "DTabAddAtEndTests.txt", dtab->getSize() -6, dtab->getSize());
-
+    std::cout << "\nTABLICA DYNAMICZNA:\n";
+    if(dtab->getSize() <= 10) {
+        preOperationFile(dtab, "DTabAddAtEndTests.txt", "dodawania na koncu", value, NULL, 0, dtab->getSize());
+        dtab->addAtEnd(value);
+        afterOperationFile(dtab, "DTabAddAtEndTests.txt", 0, dtab->getSize());
+    } else {
+        preOperationFile(dtab, "DTabAddAtEndTests.txt", "dodawania na koncu", value, NULL, dtab->getSize() -6, dtab->getSize());
+        dtab->addAtEnd(value);
+        afterOperationFile(dtab, "DTabAddAtEndTests.txt", dtab->getSize() -6, dtab->getSize());
+    }
 }
 
 /**tests adding at index method for all structures same time,
 creates/opens files named as structure class, write state before adding, adding value and state after addition*/
 void StructTester::testAddAtIndexAll(int value, unsigned int index) {
-    preOperationFile(list, "listAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index-3, index+3);
-    list = list->addAtIndex(value, index);
-    afterOperationFile(list, "listAddAtIndexTests.txt", index-3, index+4);
+    std::cout << "\nLISTA:\n";
+    if(list->getSize() <= 10) {
+        preOperationFile(list, "listAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, 0, list->getSize());
+        list = list->addAtIndex(value, index);
+        afterOperationFile(list, "listAddAtIndexTests.txt", 0, list->getSize());
+    } else if(index+5 >= list->getSize()) {
+        preOperationFile(list, "listAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index -3, list->getSize());
+        list = list->addAtIndex(value, index);
+        afterOperationFile(list, "listAddAtIndexTests.txt", index -3, list->getSize());
+    } else if(index < 5) {
+        preOperationFile(list, "listAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, 0, index+3);
+        list = list->addAtIndex(value, index);
+        afterOperationFile(list, "listAddAtIndexTests.txt", 0, index+3);
+    } else {
+        preOperationFile(list, "listAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index-3, index+3);
+        list = list->addAtIndex(value, index);
+        afterOperationFile(list, "listAddAtIndexTests.txt", index-3, index+4);
+    }
 
-    preOperationFile(dtab, "DTabAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index-3, index+3);
-    dtab->addAtIndex(value, index);
-    afterOperationFile(dtab, "DTabAddAtIndexTests.txt", index-3, index+4);
+    std::cout << "\nTABLICA DYNAMICZNA:\n";
+    if(dtab->getSize() <= 10) {
+        preOperationFile(dtab, "DTabAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, 0, dtab->getSize());
+        dtab->addAtIndex(value, index);
+        afterOperationFile(dtab, "DTabAddAtIndexTests.txt", 0, dtab->getSize());
+    } else if(index+5 >= dtab->getSize()) {
+        preOperationFile(dtab, "DTabAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index-3, dtab->getSize());
+        dtab->addAtIndex(value, index);
+        afterOperationFile(dtab, "DTabAddAtIndexTests.txt", index-3, dtab->getSize());
+    } else if(index < 5) {
+        preOperationFile(dtab, "DTabAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, 0, index+3);
+        dtab->addAtIndex(value, index);
+        afterOperationFile(dtab, "DTabAddAtIndexTests.txt", 0, index+4);
+    } else {
+        preOperationFile(dtab, "DTabAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index-3, index+3);
+        dtab->addAtIndex(value, index);
+        afterOperationFile(dtab, "DTabAddAtIndexTests.txt", index-3, index+4);
+    }
 }
 
 void StructTester::testAddList(int value) {
-    preOperationFile(list, "listAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
-    list = list->add(value);
-    afterOperationFile(list, "listAddTests.txt", 0, 5);
+    if(list->getSize() <= 10) {
+        preOperationFile(list, "listAddTests.txt", "dodawania na poczatku", value, 0, 0, list->getSize());
+        list = list->add(value);
+        afterOperationFile(list, "listAddTests.txt", 0, list->getSize());
+    } else {
+        preOperationFile(list, "listAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
+        list = list->add(value);
+        afterOperationFile(list, "listAddTests.txt", 0, 5);
+    }
 }
 
 void StructTester::testAddHeap(int value) {
-    preOperationFile(heap, "heapAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
-    heap->add(value);
-    afterOperationFile(heap, "heapAddTests.txt", 0, 5);
+    if(heap->getSize() <= 10) {
+        preOperationFile(heap,"heapAddTests.txt", "dodawania", value, 0, 0, heap->getSize());
+        heap->add(value);
+        afterOperationFile(heap, "heapAddTests.txt", 0, heap->getSize());
+    } else {
+        preOperationFile(heap,"heapAddTests.txt", "dodawania", value, 0, 0, 5);
+        heap->add(value);
+        afterOperationFile(heap, "heapAddTests.txt", 0, 5);
+    }
 }
 
 void StructTester::testAddDTab(int value) {
-    preOperationFile(dtab,"DTabAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
-    dtab->add(value);
-    afterOperationFile(dtab, "DTabAddTests.txt", 0, 5);
+    if(dtab->getSize() <= 10) {
+        preOperationFile(dtab, "DTabAddTests.txt", "dodawania na poczatku", value, 0, 0, dtab->getSize());
+        dtab->add(value);
+        afterOperationFile(dtab, "DTabAddTests.txt", 0, dtab->getSize());
+    } else {
+        preOperationFile(dtab, "DTabAddTests.txt", "dodawania na poczatku", value, 0, 0, 5);
+        dtab->add(value);
+        afterOperationFile(dtab, "DTabAddTests.txt", 0, 5);
+    }
 }
 
 void StructTester::testAddAtEndList(int value) {
-    preOperationFile(list, "listAddAtEndTests.txt", "dodawania na koncu", value, 0, list->getSize() -6, list->getSize());
-    list = list->addAtEnd(value);
-    afterOperationFile(list, "listAddAtEndTests.txt", list->getSize() -6, list->getSize());
+    if(dtab->getSize() <= 10) {
+        preOperationFile(list, "listAddAtEndTests.txt", "dodawania na koncu", value, NULL, 0, list->getSize());
+        list = list->addAtEnd(value);
+        afterOperationFile(list, "listAddAtEndTests.txt", 0, list->getSize());
+    } else {
+        preOperationFile(list, "listAddAtEndTests.txt", "dodawania na koncu", value, NULL, list->getSize() -6, list->getSize());
+        list = list->addAtEnd(value);
+        afterOperationFile(list, "listAddAtEndTests.txt", list->getSize() -6, list->getSize());
+    }
 }
 
 void StructTester::testAddAtIndexList(int value, unsigned int index) {
-    preOperationFile(list, "listAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index-3, index+3);
-    list = list->addAtIndex(value, index);
-    afterOperationFile(list, "listAddAtIndexTests.txt", index-3, index+4);
+    if(list->getSize() <= 10) {
+        preOperationFile(list, "listAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, 0, list->getSize());
+        list = list->addAtIndex(value, index);
+        afterOperationFile(list, "listAddAtIndexTests.txt", 0, list->getSize());
+    } else if(index+5 >= list->getSize()) {
+        preOperationFile(list, "listAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index -3, list->getSize());
+        list = list->addAtIndex(value, index);
+        afterOperationFile(list, "listAddAtIndexTests.txt", index -3, list->getSize());
+    } else if(index < 5) {
+        preOperationFile(list, "listAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, 0, index+3);
+        list = list->addAtIndex(value, index);
+        afterOperationFile(list, "listAddAtIndexTests.txt", 0, index+3);
+    } else {
+        preOperationFile(list, "listAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index-3, index+3);
+        list = list->addAtIndex(value, index);
+        afterOperationFile(list, "listAddAtIndexTests.txt", index-3, index+4);
+    }
 }
 
 void StructTester::testAddAtIndexDTab(int value, unsigned int index) {
-    preOperationFile(dtab, "DTabAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index-3, index+3);
-    dtab->addAtIndex(value, index);
-    afterOperationFile(dtab, "DTabAddAtIndexTests.txt", index-3, index+4);
+    if(dtab->getSize() <= 10) {
+        preOperationFile(dtab, "DTabAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, 0, dtab->getSize());
+        dtab->addAtIndex(value, index);
+        afterOperationFile(dtab, "DTabAddAtIndexTests.txt", 0, dtab->getSize());
+    } else if(index+5 >= dtab->getSize()) {
+        preOperationFile(dtab, "DTabAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index-3, dtab->getSize());
+        dtab->addAtIndex(value, index);
+        afterOperationFile(dtab, "DTabAddAtIndexTests.txt", index-3, dtab->getSize());
+    } else if(index < 5) {
+        preOperationFile(dtab, "DTabAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, 0, index+3);
+        dtab->addAtIndex(value, index);
+        afterOperationFile(dtab, "DTabAddAtIndexTests.txt", 0, index+4);
+    } else {
+        preOperationFile(dtab, "DTabAddAtIndexTests.txt", "dodawania w okreslonym miejscu", value, index, index-3, index+3);
+        dtab->addAtIndex(value, index);
+        afterOperationFile(dtab, "DTabAddAtIndexTests.txt", index-3, index+4);
+    }
 }
 
 void StructTester::testAddAtEndDTab(int value) {
-    preOperationFile(dtab, "DTabAddAtEndTests.txt", "dodawania na koncu", value, NULL, dtab->getSize() -6, dtab->getSize());
-    dtab->addAtEnd(value);
-    afterOperationFile(dtab, "DTabAddAtEndTests.txt", dtab->getSize() -6, dtab->getSize());
+    if(dtab->getSize() <= 10) {
+        preOperationFile(dtab, "DTabAddAtEndTests.txt", "dodawania na koncu", value, NULL, 0, dtab->getSize());
+        dtab->addAtEnd(value);
+        afterOperationFile(dtab, "DTabAddAtEndTests.txt", 0, dtab->getSize());
+    } else {
+        preOperationFile(dtab, "DTabAddAtEndTests.txt", "dodawania na koncu", value, NULL, dtab->getSize() -6, dtab->getSize());
+        dtab->addAtEnd(value);
+        afterOperationFile(dtab, "DTabAddAtEndTests.txt", dtab->getSize() -6, dtab->getSize());
+    }
+}
+
+void StructTester::testDeleteFirstAll() {
+    std::cout << "\nLISTA:\n";
+    if(list->getSize() <= 10) {
+        preOperationFile(list, "listDeleteFTests.txt", "usuwania z poczatku", 0, 0, 0, list->getSize());
+        int value = list->deleteFirst(&list);
+        afterOperationFile(list, "listDeleteFTests.txt", 0, list->getSize());
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    } else {
+        preOperationFile(list, "listDeleteFTests.txt", "usuwania z poczatku", 0, 0, 0, 5);
+        int value = list->deleteFirst(&list);
+        afterOperationFile(list, "listDeleteFTests.txt", 0, 5);
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    }
+
+    std::cout << "\nKOPIEC:\n";
+    if(heap->getSize() <= 10) {
+        preOperationFile(heap,"heapDeleteFTests.txt", "usuwania z poczatku", 0, 0, 0, heap->getSize());
+        int value = heap->deleteFirst();
+        afterOperationFile(heap, "heapDeleteFTests.txt", 0, heap->getSize());
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    } else {
+        preOperationFile(heap,"heapDeleteFTests.txt", "usuwania z poczatku", 0, 0, 0, 5);
+        int value = heap->deleteFirst();
+        afterOperationFile(heap, "heapDeleteFTests.txt", 0, 5);
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    }
+
+    std::cout << "\nTABLICA DYNAMICZNA:\n";
+    if(dtab->getSize() <= 10) {
+        preOperationFile(dtab, "DTabDeleteFTests.txt", "usuwania z poczatku", 0, 0, 0, dtab->getSize());
+        int value = dtab->deleteFirst();
+        afterOperationFile(dtab, "DTabDeleteFTests.txt", 0, dtab->getSize());
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    } else {
+        preOperationFile(dtab, "DTabDeleteFTests.txt", "usuwania z poczatku", 0, 0, 0, 5);
+        int value = dtab->deleteFirst();
+        afterOperationFile(dtab, "DTabDeleteFTests.txt", 0, 5);
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    }
+}
+
+void StructTester::testDeleteFirstList() {
+    if(list->getSize() <= 10) {
+        preOperationFile(list, "listDeleteFTests.txt", "usuwania z poczatku", 0, 0, 0, list->getSize());
+        int value = list->deleteFirst(&list);
+        afterOperationFile(list, "listDeleteFTests.txt", 0, list->getSize());
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    } else {
+        preOperationFile(list, "listDeleteFTests.txt", "usuwania z poczatku", 0, 0, 0, 5);
+        int value = list->deleteFirst(&list);
+        afterOperationFile(list, "listDeleteFTests.txt", 0, 5);
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    }
+}
+
+void StructTester::testDeleteFirstHeap() {
+    if(heap->getSize() <= 10) {
+        preOperationFile(heap,"heapDeleteFTests.txt", "usuwania z poczatku", 0, 0, 0, heap->getSize());
+        int value = heap->deleteFirst();
+        afterOperationFile(heap, "heapDeleteFTests.txt", 0, heap->getSize());
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    } else {
+        preOperationFile(heap,"heapDeleteFTests.txt", "usuwania z poczatku", 0, 0, 0, 5);
+        int value = heap->deleteFirst();
+        afterOperationFile(heap, "heapDeleteFTests.txt", 0, 5);
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    }
+}
+
+void StructTester::testDeleteFirstDTab() {
+    if(dtab->getSize() <= 10) {
+        preOperationFile(dtab, "DTabDeleteFTests.txt", "usuwania z poczatku", 0, 0, 0, dtab->getSize());
+        int value = dtab->deleteFirst();
+        afterOperationFile(dtab, "DTabDeleteFTests.txt", 0, dtab->getSize());
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    } else {
+        preOperationFile(dtab, "DTabDeleteFTests.txt", "usuwania z poczatku", 0, 0, 0, 5);
+        int value = dtab->deleteFirst();
+        afterOperationFile(dtab, "DTabDeleteFTests.txt", 0, 5);
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    }
+}
+
+void StructTester::testDeleteLastAll() {
+    std::cout << "\nLISTA:\n";
+    if(list->getSize() <= 10) {
+        preOperationFile(list, "listDeleteLTests.txt", "usuwania z konca", 0, 0, 0, list->getSize());
+        int value = list->deleteLast();
+        afterOperationFile(list, "listDeleteLTests.txt", 0, list->getSize());
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    } else {
+        preOperationFile(list, "listDeleteLTests.txt", "usuwania z konca", 0, 0, 0, 5);
+        int value = list->deleteLast();
+        afterOperationFile(list, "listDeleteLTests.txt", 0, 5);
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    }
+
+    std::cout << "\nTABLICA DYNAMICZNA:\n";
+    if(dtab->getSize() <= 10) {
+        preOperationFile(dtab, "DTabDeleteLTests.txt", "usuwania z konca", 0, 0, 0, dtab->getSize());
+        int value = dtab->deleteLast();
+        afterOperationFile(dtab, "DTabDeleteLTests.txt", 0, dtab->getSize());
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    } else {
+        preOperationFile(dtab, "DTabDeleteLTests.txt", "usuwania z konca", 0, 0, 0, 5);
+        int value = dtab->deleteLast();
+        afterOperationFile(dtab, "DTabDeleteLTests.txt", 0, 5);
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    }
+}
+
+void StructTester::testDeleteLastList() {
+    if(list->getSize() <= 10) {
+        preOperationFile(list, "listDeleteLTests.txt", "usuwania z konca", 0, 0, 0, list->getSize());
+        int value = list->deleteLast();
+        afterOperationFile(list, "listDeleteLTests.txt", 0, list->getSize());
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    } else {
+        preOperationFile(list, "listDeleteLTests.txt", "usuwania z konca", 0, 0, 0, 5);
+        int value = list->deleteLast();
+        afterOperationFile(list, "listDeleteLTests.txt", 0, 5);
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    }
+}
+
+void StructTester::testDeleteLastDTab() {
+    if(dtab->getSize() <= 10) {
+        preOperationFile(dtab, "DTabDeleteLTests.txt", "usuwania z konca", 0, 0, 0, dtab->getSize());
+        int value = dtab->deleteLast();
+        afterOperationFile(dtab, "DTabDeleteLTests.txt", 0, dtab->getSize());
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    } else {
+        preOperationFile(dtab, "DTabDeleteLTests.txt", "usuwania z konca", 0, 0, 0, 5);
+        int value = dtab->deleteLast();
+        afterOperationFile(dtab, "DTabDeleteLTests.txt", 0, 5);
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    }
+}
+
+void StructTester::testDeleteAtIndexAll(unsigned int index) {
+    std::cout << "\nLISTA:\n";
+    if(list->getSize() <= 10) {
+        preOperationFile(list, "listDeleteAITests.txt", "usuwania z podanego miejsca", 0, 0, 0, list->getSize());
+        int value = list->deleteAtIndex(index, &list);
+        afterOperationFile(list, "listDeleteAITests.txt", 0, list->getSize());
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    } else {
+        preOperationFile(list, "listDeleteAITests.txt", "usuwania z podanego miejsca", 0, 0, 0, 5);
+        int value = list->deleteAtIndex(index, &list);
+        afterOperationFile(list, "listDeleteAITests.txt", 0, 5);
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    }
+
+    std::cout << "\nTABLICA DYNAMICZNA:\n";
+    if(dtab->getSize() <= 10) {
+        preOperationFile(dtab, "DTabDeleteAITests.txt", "usuwania z podanego miejsca", 0, 0, 0, dtab->getSize());
+        int value = dtab->deleteLast();
+        afterOperationFile(dtab, "DTabDeleteAITests.txt", 0, dtab->getSize());
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    } else {
+        preOperationFile(dtab, "DTabDeleteAITests.txt", "usuwania z podanego miejsca", 0, 0, 0, 5);
+        int value = dtab->deleteLast();
+        afterOperationFile(dtab, "DTabDeleteAITests.txt", 0, 5);
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    }
+}
+
+void StructTester::testDeleteAtIndexList(unsigned int index) {
+    if(list->getSize() <= 10) {
+        preOperationFile(list, "listDeleteAITests.txt", "usuwania z podanego miejsca", 0, 0, 0, list->getSize());
+        int value = list->deleteAtIndex(index, &list);
+        afterOperationFile(list, "listDeleteAITests.txt", 0, list->getSize());
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    } else {
+        preOperationFile(list, "listDeleteAITests.txt", "usuwania z podanego miejsca", 0, 0, 0, 5);
+        int value = list->deleteAtIndex(index, &list);
+        afterOperationFile(list, "listDeleteAITests.txt", 0, 5);
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    }
+}
+
+void StructTester::testDeleteAtIndexDTab(unsigned int index) {
+    if(dtab->getSize() <= 10) {
+        preOperationFile(dtab, "DTabDeleteAITests.txt", "usuwania z podanego miejsca", 0, 0, 0, dtab->getSize());
+        int value = dtab->deleteLast();
+        afterOperationFile(dtab, "DTabDeleteAITests.txt", 0, dtab->getSize());
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    } else {
+        preOperationFile(dtab, "DTabDeleteAITests.txt", "usuwania z podanego miejsca", 0, 0, 0, 5);
+        int value = dtab->deleteLast();
+        afterOperationFile(dtab, "DTabDeleteAITests.txt", 0, 5);
+        std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
+    }
 }
 
 /**initialize structures with values from file*/
@@ -214,16 +531,16 @@ void StructTester::preOperationFile(Structure* st, std::string filename, std::st
     std::ofstream flist;
     flist.open(filename, std::ios::out | std::ios::app);
     if(flist.is_open()) {
-        flist << "Testowanie " << where << " struktury.\nStan struktury:\n\n... ";
-        std::cout << "Testowanie " << where << " struktury.\nStan struktury:\n\n... ";
+        flist << "Testowanie " << where << " struktury.\nStan struktury:\n\n";
+        std::cout << "Testowanie " << where << " struktury.\nStan struktury:\n\n";
         for(unsigned int i = begin; i < end; i++) {
             flist << st->get(i) << " ";
             std::cout << st->get(i) << " ";
         }
         flist << "\n\n";
-        flist << "Wartosc: " << value << "  index: " << index << "\n\nStan struktury po operacji:\n\n... ";
+        flist << "Wartosc: " << value << "  index: " << index << "\n\nStan struktury po operacji:\n\n";
         std::cout << "\n\n";
-        std::cout << "Wartosc: " << value << "  index: " << index << "\n\nStan struktury po operacji:\n\n... ";
+        std::cout << "Wartosc: " << value << "  index: " << index << "\n\nStan struktury po operacji:\n\n";
         flist.close();
     } else {
         std::cout << "Blad podczas otwierania pliku" << std::endl;
