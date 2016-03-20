@@ -1,39 +1,294 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string>
-#include <algorithm>
+#include <vector>
+#include <fstream>
+#include <time.h>
+#include <chrono>
+#include <windows.h>
 
 #include "List.h"
 #include "DynTab.h"
 #include "Heap.h"
+#include "Structure.h"
+#include "StructTester.h"
+
+#include "RBTree.h"
 
 using namespace std;
 
-void testujListe();
-void testujTablice();
+void stworzplik(int);
 
 int main()
 {
-    testujListe();
+    char w;
+    bool a,b,c,d,e,f,g;
+    a=b=c=d=e=f=g=true;
+    StructTester *st = new StructTester();
 
-    testujTablice();
+    //stworzplik(5);
 
-    Heap *heap = new Heap(0);
-    for(int i = 0; i < 15; i++) {
-        heap->push(i);
+    while (a) {
+        b=c=d=e=f=g=true;
+        cout << "Witaj! Program ten pozwala na testowanie roznych struktur danych.\nZaleca sie testowanie malych struktur, duze struktury moga sie okazac zbyt trudne do analizowania\n";
+        cout << "\nWybierz opcje:\n\t[1]Testuj liste.\n\t[2]Testuj tablice dynamiczna.\n\t[3]Testuj kopiec.\n\t[4]Testuj drzewo RB.\n\t[5]Testuj wszystkie.\n\t[6]Opusc program.\n\n";
+        cout << ">>: ";
+        cin >> w;
+        system("cls");
+        switch(w) {
+        case '1' : {
+            while(b) {
+                cout << "\nTESTUJ LISTE!" << endl;
+                cout << "\nWybierz opcje:\n\t[1]Wczytaj wartosci z pliku\n\t[2]Dodaj na poczatek\n\t[3]Dodaj na ...\n\t[4]Dodaj na koniec\n\t[5]Szukaj wartosci\n\t[6]Usun z poczatku\n\t[7]Usun z ...\n\t[8]Usun z konca\n\t[9]Pokaz liste\n\t[a]Powrot do opcji\n\n";
+                cin >> w;
+                system("cls");
+                switch(w) {
+                case '1' : {
+                    string file;
+                    cout << "Podaj nazwe pliku: ";
+                    cin.ignore();
+                    getline(cin, file);
+                    st->fillStructuresFromFile(file);
+                    st->printList();
+                    break;
+                } case '2' : {
+                    int value;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testAddList(value);
+                    break;
+                } case '3' : {
+                    int value, index;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    cin.ignore();
+                    cout << "Podaj index: ";
+                    cin >> index;
+                    st->testAddAtIndexList(value, index);
+                    break;
+                } case '4' : {
+                    int value;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testAddAtEndList(value);
+                    break;
+                } case '5' : {
+                    int value;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testFindValueList(value);
+                    break;
+                } case '6' : {
+                    st->testDeleteFirstList();
+                    break;
+                } case '7' : {
+                    int value;
+                    cout << "Podaj index: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testDeleteAtIndexList(value);
+                    break;
+                } case '8' : {
+                    st->testDeleteLastList();
+                    break;
+                } case '9' : {
+                    st->printList();
+                    break;
+                } case 'a' : {
+                    b = false;
+                    break;
+                }
+                }
+            } //while testuj liste
+            break;
+        } // case 1
+        case '2' : {
+            while(c) {
+                cout << "\nTESTUJ TABLICE DYNAMICZNA!" << endl;
+                cout << "\nWybierz opcje:\n\t[1]Wczytaj wartosci z pliku\n\t[2]Dodaj na poczatek\n\t[3]Dodaj na ...\n\t[4]Dodaj na koniec\n\t[5]Szukaj wartosci\n\t[6]Usun z poczatku\n\t[7]Usun z ...\n\t[8]Usun z konca\n\t[9]Pokaz liste\n\t[a]Powrot do opcji\n\n";
+                cin >> w;
+                system("cls");
+                switch(w) {
+                case '1' : {
+                    string file;
+                    cout << "Podaj nazwe pliku: ";
+                    cin.ignore();
+                    getline(cin, file);
+                    st->fillStructuresFromFile(file);
+                    st->printDTab();
+                    break;
+                } case '2' : {
+                    int value;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testAddDTab(value);
+                    break;
+                } case '3' : {
+                    int value, index;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    cin.ignore();
+                    cout << "Podaj index: ";
+                    cin >> index;
+                    st->testAddAtIndexDTab(value, index);
+                    break;
+                } case '4' : {
+                    int value;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testAddAtEndDTab(value);
+                    break;
+                } case '5' : {
+                    int value;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testFindValueDTab(value);
+                    break;
+                } case '6' : {
+                    st->testDeleteFirstDTab();
+                    break;
+                } case '7' : {
+                    int value;
+                    cout << "Podaj index: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testDeleteAtIndexDTab(value);
+                    break;
+                } case '8' : {
+                    st->testDeleteLastDTab();
+                    break;
+                } case '9' : {
+                    st->printDTab();
+                    break;
+                } case 'a' : {
+                    c = false;
+                    break;
+                }
+                }
+            }//while testuj tablice
+            break;
+        }//case 2
+        case '3' : {
+            while(d) {
+                cout << "\nTESTUJ KOPIEC!" << endl;
+                cout << "\nWybierz opcje:\n\t[1]Wczytaj wartosci z pliku\n\t[2]Dodaj\n\t[3]Szukaj wartosci\n\t[4]Usun\n\t[5]Pokaz liste\n\t[6]Powrot do opcji\n\n";
+                cin >> w;
+                system("cls");
+                switch(w) {
+                case '1' : {
+                    string file;
+                    cout << "Podaj nazwe pliku: ";
+                    cin.ignore();
+                    getline(cin, file);
+                    st->fillStructuresFromFile(file);
+                    st->printHeap();
+                    break;
+                } case '2' : {
+                    int value;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testAddHeap(value);
+                    break;
+                } case '3' : {
+                    int value;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testFindValueHeap(value);
+                    break;
+                } case '4' : {
+                    st->testDeleteFirstHeap();
+                    break;
+                }  case '5' : {
+                    st->printHeap();
+                    break;
+                } case '6' : {
+                    d = false;
+                    break;
+                }
+                }
+            }//while testuj kopiec
+            break;
+        }//case 3
+        case '3' : {
+            while(d) {
+                cout << "\nTESTUJ KOPIEC!" << endl;
+                cout << "\nWybierz opcje:\n\t[1]Wczytaj wartosci z pliku\n\t[2]Dodaj\n\t[3]Szukaj wartosci\n\t[4]Usun\n\t[5]Pokaz liste\n\t[6]Powrot do opcji\n\n";
+                cin >> w;
+                system("cls");
+                switch(w) {
+                case '1' : {
+                    string file;
+                    cout << "Podaj nazwe pliku: ";
+                    cin.ignore();
+                    getline(cin, file);
+                    st->fillStructuresFromFile(file);
+                    st->printHeap();
+                    break;
+                } case '2' : {
+                    int value;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testAddHeap(value);
+                    break;
+                } case '3' : {
+                    int value;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testFindValueHeap(value);
+                    break;
+                } case '4' : {
+                    st->testDeleteFirstHeap();
+                    break;
+                }  case '5' : {
+                    st->printHeap();
+                    break;
+                } case '6' : {
+                    d = false;
+                    break;
+                }
+                }
+            }//while testuj rbtree
+            break;
+        }//case 4
+        case '6' : {
+            a=false;
+            break;
+        }
+        }
+
     }
-
-    cout << endl << endl;
-
-    heap->printHeap();
-    heap->pop();
-    heap->pop();
-    heap->pop();
-    heap->pop();
-    cout << endl << endl;
 
 }
 
+
+void stworzplik(int ile) {
+    srand(time(NULL));
+    ofstream data("values.txt");
+    if(data.is_open()) {
+        for(int i = 0; i < ile; i++) {
+            if(rand() % 5 + 1 == 2) {
+                data << (-1)*(rand() % 50000 + 1) << endl;
+            } else {
+                data << rand() % 50000 + 1 << endl;
+            }
+        }
+    }
+    data.close();
+}
+
+/**
 void testujTablice() {
 
     cout << "\n\n\n\nTworze dynamiczna tablice..." << endl;
@@ -173,3 +428,4 @@ void testujListe() {
     head->printList();
     cout << "/ return: " << a << endl;
 }
+*/

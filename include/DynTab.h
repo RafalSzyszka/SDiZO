@@ -13,6 +13,7 @@ class DynTab : public Structure
         DynTab* add(int);     //adds value at the begin of table
         DynTab* addAtEnd(int);      //adds value at the end, and resizes table
         void print();   //prints structure
+        DynTab* initFromFile(std::string);
 
         unsigned int getSize() {return size;}
 
@@ -21,7 +22,7 @@ class DynTab : public Structure
         int deleteFirst(Structure** = nullptr);  //deletes and returns first value
         int deleteLast();   //deletes and returns last value
 
-        bool findValue(int);    //searches for specific value
+        int findValue(int);    //searches for specific value
 
         virtual ~DynTab();
 

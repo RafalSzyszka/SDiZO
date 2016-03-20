@@ -1,6 +1,7 @@
 #ifndef STRUCTURE_H
 #define STRUCTURE_H
 
+#include <string>
 
 class Structure
 {
@@ -15,7 +16,8 @@ class Structure
         virtual int deleteLast()=0;     //deleting last element
 
         virtual void print()=0;     //printing structure
-        virtual bool findValue(int)=0;  //searches for value
+        virtual Structure* initFromFile(std::string)=0; //initialize structure from file
+        virtual int findValue(int)=0;  //searches for value
 
         virtual unsigned int getSize()=0;
 

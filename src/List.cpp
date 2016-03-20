@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <fstream>
 
 /**Constructor with value as parameter, creates list with one element
 * with value as in argument*/
@@ -54,6 +56,24 @@ List* List::addAtIndex(int val, unsigned int index) {
 
             return head;
         }
+    }
+}
+
+List* List::initFromFile(std::string filename) {
+    List* list = new List();
+    std::ifstream file(filename);
+    std::string line;
+    if(file.is_open()) {
+        while (getline(file, line)) {
+            int value;
+            std::istringstream iss(line);   //converting string to int
+            iss >> value;
+            list = list->add(value);
+        }
+        return list;
+    } else {
+        std::cout << "Blad podczas otwierania pliku, struktura pozostaje pusta." << std::endl;
+        return new List();
     }
 }
 
@@ -149,16 +169,20 @@ int List::deleteAtIndex(unsigned int index, Structure** head) {
 	}
 }
 /**searches for specific value*/
-bool List::findValue(int value) {
+int List::findValue(int value) {
     List *ptr = this;
     if(ptr->value == -2147483647) {
-        return false;
+        return -1;
     } else {
-        while(ptr->next != nullptr) {
-            if(ptr->value == value) return true;
-            else ptr = ptr->next;
+        int index = 0;
+        while(ptr != nullptr) {
+            if(ptr->value == value) return index;
+            else {
+                ptr = ptr->next;
+                index++;
+            }
         }
-        return false;
+        return -1;
     }
 }
 
@@ -182,9 +206,16 @@ int List::get(unsigned int index) {
     }
 }
 
+void List::freelist(List *head) {
+    if(head != NULL && head->next != nullptr) {
+        freelist(head->next);
+    }
+    delete(head);
+}
+
 List::~List()
 {
-
+    //freelist(this);
 }
 
 /**Goes to the last element on the list*/

@@ -2,7 +2,7 @@
 #define LIST_H
 
 #include "Structure.h"
-
+#include <string>
 class List : public Structure
 {
     public:
@@ -14,6 +14,7 @@ class List : public Structure
         List* addAtEnd(int);    //add to end of list
 
         void print();   //print list
+        List* initFromFile(std::string);
 
         unsigned int getSize();     //return size of list
         int deleteFirst(Structure**);      //deletes first element and returns it's value
@@ -21,8 +22,10 @@ class List : public Structure
         int deleteAtIndex(unsigned int, Structure**);    //deletes specific element and returns it's value
 
         bool isEmpty();     //return true if list is empty, otherwise false
-        bool findValue(int);    //searches for specific value
+        int findValue(int);    //searches for specific value
         int get(unsigned int);
+
+        void freelist(List*);
         virtual ~List();
 
     private:

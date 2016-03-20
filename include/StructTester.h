@@ -2,6 +2,7 @@
 #define STRUCTTESTER_H
 
 #include "Structure.h"
+#include "RBTree.h"
 
 #include <string>
 
@@ -10,7 +11,7 @@ class StructTester
 {
     public:
         StructTester();
-        StructTester(Structure*, Structure*, Structure*, Structure*);
+        StructTester(Structure*, Structure*, Structure*, RBTree*);
 
         void testAddAll(int);   //
         void testAddAtEndAll(int);  //
@@ -21,12 +22,12 @@ class StructTester
         void testAddAtIndexList(int, unsigned int); //
 
         void testAddHeap(int);  //
+        void testAddRBTree(int);  //
 
         void testAddDTab(int);  //
         void testAddAtEndDTab(int); //
         void testAddAtIndexDTab(int, unsigned int); //
 
-        void testAddRBTr(int);
 
         void testDeleteFirstAll(); //
         void testDeleteLastAll();//
@@ -75,10 +76,12 @@ class StructTester
         Structure* list;
         Structure* heap;
         Structure* dtab;
-        Structure* rbtree;
+        RBTree* rbtree;
 
         void preOperationFile(Structure*, std::string, std::string, int, unsigned int, unsigned int, unsigned int);
         void afterOperationFile(Structure*, std::string, unsigned int, unsigned int);
+        void preFindFile(std::string, int);
+        void afterFindFile(std::string, int);
 
 };
 

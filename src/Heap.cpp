@@ -1,7 +1,8 @@
 #include "Heap.h"
 #include <stdlib.h>
 #include <iostream>
-
+#include <fstream>
+#include <sstream>
 
 /**constructor with initial value*/
 Heap::Heap(int value) : heap((int*)malloc(sizeof(int))), size(1) {
@@ -75,11 +76,11 @@ int Heap::deleteAtIndex(unsigned int index, Structure** h) {
 }
 
 /**Search for value in heap, returns true if value is in the heap, false if value does not appear in heap*/
-bool Heap::findValue(int val){
+int Heap::findValue(int val){
 	for(unsigned int i = 0; i < size; i++) {
-        if(this->heap[i] == val) return true;
+        if(this->heap[i] == val) return i;
 	}
-	return false;
+	return -1;
 }
 
 /**fixing heap after adding value*/
@@ -134,6 +135,23 @@ void Heap::heapFixUpDown(int *heap) {
 	}
 }
 
+Heap* Heap::initFromFile(std::string filename) {
+    Heap* heap = new Heap();
+    std::ifstream file(filename);
+    std::string line;
+    if(file.is_open()) {
+        while (getline(file, line)) {
+            int value;
+            std::istringstream iss(line);   //converting string to int
+            iss >> value;
+            heap->addAtEnd(value);
+        }
+        return heap;
+    } else {
+        std::cout << "Blad podczas otwierania pliku, struktura pozostaje pusta." << std::endl;
+        return new Heap();
+    }
+}
 
 Heap::~Heap()
 {

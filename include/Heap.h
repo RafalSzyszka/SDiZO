@@ -2,7 +2,7 @@
 #define HEAP_H
 
 #include "Structure.h"
-
+#include <string>
 
 class Heap : public Structure
 {
@@ -11,6 +11,7 @@ public:
 	Heap(int);      //constructor with initial heap value
 
 	void print();	//prints heap
+    Heap* initFromFile(std::string);
 
 	Heap* add(int); //adds value to heap
 	Heap* addAtEnd(int); //same as add method
@@ -22,7 +23,7 @@ public:
 	int get(unsigned int);
 
 	unsigned int getSize() { return size; }		//returns heap size
-	bool findValue(int);    //searches for specific value
+	int findValue(int);    //searches for specific value
 
 	virtual ~Heap();
 

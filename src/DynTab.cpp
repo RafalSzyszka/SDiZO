@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 /**Creating empty table*/
 DynTab::DynTab() : size(0), tab() {}
@@ -85,7 +87,22 @@ int DynTab::get(unsigned int index) {
 }
 
 int DynTab::deleteAtIndex(unsigned int index, Structure** d) {
-    return 0;
+    if(index >= this->size){
+        throw std::string("Index out of bounds!");
+    }
+    int value;
+    int *tb = (int*)malloc((this->size - 1)*sizeof(int));
+    for(unsigned int i = 0; i < index; i++) {
+        tb[i] = this->tab[i];
+    }
+    for(unsigned int i = index+1; i < this->size; i++) {
+        tb[i-1] = this->tab[i];
+    }
+    value = this->tab[index];
+    free(this->tab);
+    this->tab = tb;
+    this->size--;
+    return value;
 }
 
 /**Deletes and returns array's first value
@@ -131,11 +148,29 @@ int DynTab::deleteLast() {
 }
 
 /**Searches for value in array*/
-bool DynTab::findValue(int value) {
+int DynTab::findValue(int value) {
     for(unsigned int i = 0; i < this->size; i++) {
-        if(this->tab[i] == value) return true;
+        if(this->tab[i] == value) return i;
     }
-    return false;
+    return -1;
+}
+
+DynTab* DynTab::initFromFile(std::string filename) {
+    DynTab* dtab = new DynTab();
+    std::ifstream file(filename);
+    std::string line;
+    if(file.is_open()) {
+        while (getline(file, line)) {
+            int value;
+            std::istringstream iss(line);   //converting string to int
+            iss >> value;
+            dtab->addAtEnd(value);
+        }
+        return dtab;
+    } else {
+        std::cout << "Blad podczas otwierania pliku, struktura pozostaje pusta." << std::endl;
+        return new DynTab();
+    }
 }
 
 DynTab::~DynTab()

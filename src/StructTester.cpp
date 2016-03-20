@@ -4,6 +4,8 @@
 #include "List.h"
 #include "Heap.h"
 #include "DynTab.h"
+#include "RBTree.h"
+
 
 #include <iostream>
 #include <fstream>
@@ -12,7 +14,7 @@
 
 /**creates empty structures, for tests*/
 StructTester::StructTester() :
-    list(new List()), heap(new Heap()), dtab(new DynTab()), rbtree(nullptr) { }
+    list(new List()), heap(new Heap()), dtab(new DynTab()), rbtree(new RBTree()) { }
 
 /**gets structures for tests*/
 StructTester::StructTester(Structure* l, Structure* h, Structure* dt, Structure* rbt) :
@@ -421,6 +423,7 @@ void StructTester::testDeleteAtIndexDTab(unsigned int index) {
 
 /**initialize structures with values from file*/
 void StructTester::fillStructuresFromFile(std::string filePath) {
+    clearStructures();
     std::string line;
     std::ifstream dataFile(filePath);
     if(dataFile.is_open()) {
@@ -440,6 +443,38 @@ void StructTester::fillStructuresFromFile(std::string filePath) {
     }
 }
 
+void StructTester::testFindValueAll(int value) {
+    preFindFile("listFindTests.txt", value);
+    int index = list->findValue(value);
+    afterFindFile("listFindTests.txt", index);
+
+    preFindFile("heapFindTests.txt", value);
+    index = heap->findValue(value);
+    afterFindFile("heapFindTests.txt", index);
+
+    preFindFile("DTabFindTests.txt", value);
+    index = dtab->findValue(value);
+    afterFindFile("DTabFindTests.txt", index);
+}
+
+void StructTester::testFindValueList(int value) {
+    preFindFile("listFindTests.txt", value);
+    int index = list->findValue(value);
+    afterFindFile("listFindTests.txt", index);
+}
+
+void StructTester::testFindValueHeap(int value) {
+    preFindFile("heapFindTests.txt", value);
+    int index = heap->findValue(value);
+    afterFindFile("heapFindTests.txt", index);
+}
+
+void StructTester::testFindValueDTab(int value) {
+    preFindFile("DTabFindTests.txt", value);
+    int index = dtab->findValue(value);
+    afterFindFile("DTabFindTests.txt", index);
+}
+
 /**4 methods below prints structures to standard out*/
 void StructTester::printList() {
     list->print();
@@ -454,7 +489,7 @@ void StructTester::printDTab() {
 }
 
 void StructTester::printRbTr() {
-    //rbtree->print();
+    rbtree->print();
 }
 
 void StructTester::setStructures(Structure *li, Structure *h, Structure *dt, Structure *rbt) {
@@ -464,8 +499,8 @@ void StructTester::setStructures(Structure *li, Structure *h, Structure *dt, Str
     heap = (Heap*) h;
     delete(dtab);
     dtab = (DynTab*) dt;
-    //delete(rbtree);
-    //rbtree = (RBTree*) rbt;
+    rbtree->DFSRelease(rbtree);
+    rbtree = (RBTree*) rbt;
 }
 
 void StructTester::setList(Structure* li) {
@@ -558,6 +593,34 @@ void StructTester::afterOperationFile(Structure* st, std::string filename, unsig
             flist << "\n\n\n";
             std::cout << "\n\n\n";
             flist.close();
+    } else {
+        std::cout << "Blad podczas otwierania pliku!" << std::endl;
+    }
+}
+
+void StructTester::preFindFile(std::string filename, int value) {
+    std::ofstream file;
+    file.open(filename, std::ios::out | std::ios::app);
+    if(file.is_open()) {
+        file << "Testowanie szukania wartosci w strukturze.\n";
+        std::cout << "Testowanie szukania wartosci w strukturze.\n";
+        file << "Szukana wartosc: " << value << "\n\n";
+        std::cout << "Szukana wartosc: " << value << "\n\n";
+        file << "Indeks szukanej wartoœci: ";
+        std::cout << "Indeks szukanej wartoœci: ";
+        file.close();
+    } else {
+        std::cout << "Blad podczas otwierania pliku!" << std::endl;
+    }
+}
+
+void StructTester::afterFindFile(std::string filename, int index) {
+    std::ofstream file;
+    file.open(filename, std::ios::out | std::ios::app);
+    if(file.is_open()) {
+        file << index << "\n\n\n";
+        std::cout << index << "\n\nPlik z ta wiadomoscia zostal utworzony w domyslnym katalogu.\n";
+        file.close();
     } else {
         std::cout << "Blad podczas otwierania pliku!" << std::endl;
     }
