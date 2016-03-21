@@ -58,11 +58,11 @@ class StructTester
         void printDTab();
         void printRbTr();
 
-        void setStructures(Structure*,Structure*,Structure*,Structure*);
+        void setStructures(Structure*,Structure*,Structure*,RBTree*);
         void setList(Structure*);
         void setHeap(Structure*);
         void setDtab(Structure*);
-        void setRbtr(Structure*);
+        void setRbtr(RBTree*);
 
         void clearStructures();
         void clearList();
@@ -82,6 +82,8 @@ class StructTester
         void afterOperationFile(Structure*, std::string, unsigned int, unsigned int);
         void preFindFile(std::string, int);
         void afterFindFile(std::string, int);
+        void preRBTfile(std::string);
+        void afterRBTfile(std::string);
 
 };
 

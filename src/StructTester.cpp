@@ -17,7 +17,7 @@ StructTester::StructTester() :
     list(new List()), heap(new Heap()), dtab(new DynTab()), rbtree(new RBTree()) { }
 
 /**gets structures for tests*/
-StructTester::StructTester(Structure* l, Structure* h, Structure* dt, Structure* rbt) :
+StructTester::StructTester(Structure* l, Structure* h, Structure* dt, RBTree* rbt) :
     list(l), heap(h), dtab(dt), rbtree(rbt) { }
 
 /**tests adding at begin method for all structures same time,
@@ -56,6 +56,10 @@ void StructTester::testAddAll(int value) {
         afterOperationFile(dtab, "DTabAddTests.txt", 0, 5);
     }
 
+    std::cout << "\nDRZEWO CZERWONO-CZARNE\n";
+    preRBTfile("RBTaddTests.txt");
+    rbtree->insertRBT(value);
+    afterRBTfile("RBTaddTests.txt");
 }
 
 /**tests adding at end method for all structures same time,
@@ -148,6 +152,12 @@ void StructTester::testAddHeap(int value) {
         heap->add(value);
         afterOperationFile(heap, "heapAddTests.txt", 0, 5);
     }
+}
+
+void StructTester::testAddRBTree(int value) {
+    preRBTfile("RBTaddTests.txt");
+    rbtree->insertRBT(value);
+    afterRBTfile("RBTaddTests.txt");
 }
 
 void StructTester::testAddDTab(int value) {
@@ -265,6 +275,11 @@ void StructTester::testDeleteFirstAll() {
         afterOperationFile(dtab, "DTabDeleteFTests.txt", 0, 5);
         std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
     }
+
+    std::cout << "\nDRZEWO CZERWONO-CZARNE:\n";
+    preRBTfile("RBTdeleteTests.txt");
+    rbtree->removeRBT(rbtree->getRoot());
+    afterRBTfile("RBTdeleteTests.txt");
 }
 
 void StructTester::testDeleteFirstList() {
@@ -293,6 +308,12 @@ void StructTester::testDeleteFirstHeap() {
         afterOperationFile(heap, "heapDeleteFTests.txt", 0, 5);
         std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
     }
+}
+
+void StructTester::testDeleteFirstRBTr() {
+    preRBTfile("RBTdeleteTests.txt");
+    rbtree->removeRBT(rbtree->getRoot());
+    afterRBTfile("RBTdeleteTests.txt");
 }
 
 void StructTester::testDeleteFirstDTab() {
@@ -382,12 +403,12 @@ void StructTester::testDeleteAtIndexAll(unsigned int index) {
     std::cout << "\nTABLICA DYNAMICZNA:\n";
     if(dtab->getSize() <= 10) {
         preOperationFile(dtab, "DTabDeleteAITests.txt", "usuwania z podanego miejsca", 0, 0, 0, dtab->getSize());
-        int value = dtab->deleteLast();
+        int value = dtab->deleteAtIndex(index);
         afterOperationFile(dtab, "DTabDeleteAITests.txt", 0, dtab->getSize());
         std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
     } else {
         preOperationFile(dtab, "DTabDeleteAITests.txt", "usuwania z podanego miejsca", 0, 0, 0, 5);
-        int value = dtab->deleteLast();
+        int value = dtab->deleteAtIndex(index);
         afterOperationFile(dtab, "DTabDeleteAITests.txt", 0, 5);
         std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
     }
@@ -410,12 +431,12 @@ void StructTester::testDeleteAtIndexList(unsigned int index) {
 void StructTester::testDeleteAtIndexDTab(unsigned int index) {
     if(dtab->getSize() <= 10) {
         preOperationFile(dtab, "DTabDeleteAITests.txt", "usuwania z podanego miejsca", 0, 0, 0, dtab->getSize());
-        int value = dtab->deleteLast();
+        int value = dtab->deleteAtIndex(index);
         afterOperationFile(dtab, "DTabDeleteAITests.txt", 0, dtab->getSize());
         std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
     } else {
         preOperationFile(dtab, "DTabDeleteAITests.txt", "usuwania z podanego miejsca", 0, 0, 0, 5);
-        int value = dtab->deleteLast();
+        int value = dtab->deleteAtIndex(index);
         afterOperationFile(dtab, "DTabDeleteAITests.txt", 0, 5);
         std::cout << "Usunieta wartosc: " << value << "\n####\n\n";
     }
@@ -435,6 +456,7 @@ void StructTester::fillStructuresFromFile(std::string filePath) {
             list->addAtEnd(value);  //adding value to structures
             heap->addAtEnd(value);
             dtab->addAtEnd(value);
+            rbtree->insertRBT(value);
         }
         std::cout << "Gotowe!\nStruktury wypelnione wartosciami z pliku!" << std::endl;
         dataFile.close();
@@ -455,6 +477,10 @@ void StructTester::testFindValueAll(int value) {
     preFindFile("DTabFindTests.txt", value);
     index = dtab->findValue(value);
     afterFindFile("DTabFindTests.txt", index);
+
+    preFindFile("RBTreeFindTests.txt", value);
+    index = rbtree->findRBT(value);
+    afterFindFile("RBTreeFindTests.txt", index);
 }
 
 void StructTester::testFindValueList(int value) {
@@ -475,6 +501,12 @@ void StructTester::testFindValueDTab(int value) {
     afterFindFile("DTabFindTests.txt", index);
 }
 
+void StructTester::testFindValueRBTr(int value) {
+    preFindFile("RBTreeFindTests.txt", value);
+    int index = rbtree->findRBT(value);
+    afterFindFile("RBTreeFindTests.txt", index);
+}
+
 /**4 methods below prints structures to standard out*/
 void StructTester::printList() {
     list->print();
@@ -492,14 +524,14 @@ void StructTester::printRbTr() {
     rbtree->print();
 }
 
-void StructTester::setStructures(Structure *li, Structure *h, Structure *dt, Structure *rbt) {
+void StructTester::setStructures(Structure *li, Structure *h, Structure *dt, RBTree *rbt) {
     delete(list);
     list = (List*) li;
     delete(heap);
     heap = (Heap*) h;
     delete(dtab);
     dtab = (DynTab*) dt;
-    rbtree->DFSRelease(rbtree);
+    rbtree->DFSRelease(rbtree->getRoot());
     rbtree = (RBTree*) rbt;
 }
 
@@ -518,9 +550,9 @@ void StructTester::setDtab(Structure* dt) {
     dtab = (DynTab*)dt;
 }
 
-void StructTester::setRbtr(Structure* rb) {
-    //delete(RBTree);
-    //rbtree = (RBTree*)rb;
+void StructTester::setRbtr(RBTree* rb) {
+    rbtree->DFSRelease(rbtree->getRoot());
+    rbtree = rb;
 }
 
 void StructTester::clearStructures() {
@@ -530,8 +562,8 @@ void StructTester::clearStructures() {
     heap = new Heap();
     delete(dtab);
     dtab = new DynTab();
-    //delete(rbtree);
-    //rbtree = new RBTree();
+    rbtree->DFSRelease(rbtree->getRoot());
+    rbtree = new RBTree();
 }
 
 void StructTester::clearList() {
@@ -550,8 +582,8 @@ void StructTester::clearDtab() {
 }
 
 void StructTester::clearRBtr() {
-    //delete(rbtree);
-    //rbtree = new RBTree();
+    rbtree->DFSRelease(rbtree->getRoot());
+    rbtree = new RBTree();
 }
 
 StructTester::~StructTester()
@@ -559,7 +591,7 @@ StructTester::~StructTester()
     delete(list);
     delete(heap);
     delete(dtab);
-    delete(rbtree);
+    rbtree->DFSRelease(rbtree->getRoot());
 }
 
 void StructTester::preOperationFile(Structure* st, std::string filename, std::string where, int value, unsigned int index, unsigned int begin, unsigned int end) {
@@ -591,7 +623,7 @@ void StructTester::afterOperationFile(Structure* st, std::string filename, unsig
                 std::cout << st->get(i) << " ";
             }
             flist << "\n\n\n";
-            std::cout << "\n\n\n";
+            std::cout << "\n\nPlik z ta wiadomoscia zostal utworzony w domyslnym katalogu.\n";
             flist.close();
     } else {
         std::cout << "Blad podczas otwierania pliku!" << std::endl;
@@ -620,6 +652,34 @@ void StructTester::afterFindFile(std::string filename, int index) {
     if(file.is_open()) {
         file << index << "\n\n\n";
         std::cout << index << "\n\nPlik z ta wiadomoscia zostal utworzony w domyslnym katalogu.\n";
+        file.close();
+    } else {
+        std::cout << "Blad podczas otwierania pliku!" << std::endl;
+    }
+}
+
+void StructTester::preRBTfile(std::string filename) {
+    std::ofstream file;
+    file.open(filename, std::ios::out | std::ios::app);
+    if(file.is_open()) {
+        file << "\n\nPrzed operacja\n\n";
+        //rbtree->print(file);
+        std::cout << "\n\nPrzed operacja\n\n";
+        rbtree->print();
+        file.close();
+    } else {
+        std::cout << "Blad podczas otwierania pliku!" << std::endl;
+    }
+}
+
+void StructTester::afterRBTfile(std::string filename) {
+    std::ofstream file;
+    file.open(filename, std::ios::out | std::ios::app);
+    if(file.is_open()) {
+        file << "\n\nPo operacja\n\n";
+        //rbtree->print(file);
+        std::cout << "\n\nPo operacja\n\n";
+        rbtree->print();
         file.close();
     } else {
         std::cout << "Blad podczas otwierania pliku!" << std::endl;

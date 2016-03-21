@@ -109,7 +109,7 @@ int main()
         case '2' : {
             while(c) {
                 cout << "\nTESTUJ TABLICE DYNAMICZNA!" << endl;
-                cout << "\nWybierz opcje:\n\t[1]Wczytaj wartosci z pliku\n\t[2]Dodaj na poczatek\n\t[3]Dodaj na ...\n\t[4]Dodaj na koniec\n\t[5]Szukaj wartosci\n\t[6]Usun z poczatku\n\t[7]Usun z ...\n\t[8]Usun z konca\n\t[9]Pokaz liste\n\t[a]Powrot do opcji\n\n";
+                cout << "\nWybierz opcje:\n\t[1]Wczytaj wartosci z pliku\n\t[2]Dodaj na poczatek\n\t[3]Dodaj na ...\n\t[4]Dodaj na koniec\n\t[5]Szukaj wartosci\n\t[6]Usun z poczatku\n\t[7]Usun z ...\n\t[8]Usun z konca\n\t[9]Pokaz tablice\n\t[a]Powrot do opcji\n\n";
                 cin >> w;
                 system("cls");
                 switch(w) {
@@ -179,7 +179,7 @@ int main()
         case '3' : {
             while(d) {
                 cout << "\nTESTUJ KOPIEC!" << endl;
-                cout << "\nWybierz opcje:\n\t[1]Wczytaj wartosci z pliku\n\t[2]Dodaj\n\t[3]Szukaj wartosci\n\t[4]Usun\n\t[5]Pokaz liste\n\t[6]Powrot do opcji\n\n";
+                cout << "\nWybierz opcje:\n\t[1]Wczytaj wartosci z pliku\n\t[2]Dodaj\n\t[3]Szukaj wartosci\n\t[4]Usun\n\t[5]Pokaz kopiec\n\t[6]Powrot do opcji\n\n";
                 cin >> w;
                 system("cls");
                 switch(w) {
@@ -219,10 +219,10 @@ int main()
             }//while testuj kopiec
             break;
         }//case 3
-        case '3' : {
-            while(d) {
-                cout << "\nTESTUJ KOPIEC!" << endl;
-                cout << "\nWybierz opcje:\n\t[1]Wczytaj wartosci z pliku\n\t[2]Dodaj\n\t[3]Szukaj wartosci\n\t[4]Usun\n\t[5]Pokaz liste\n\t[6]Powrot do opcji\n\n";
+        case '4' : {
+            while(e) {
+                cout << "\nTESTUJ DRZEWO RB!" << endl;
+                cout << "\nWybierz opcje:\n\t[1]Wczytaj wartosci z pliku\n\t[2]Dodaj\n\t[3]Szukaj wartosci\n\t[4]Usun\n\t[5]Pokaz drzewo\n\t[6]Powrot do opcji\n\n";
                 cin >> w;
                 system("cls");
                 switch(w) {
@@ -232,36 +232,120 @@ int main()
                     cin.ignore();
                     getline(cin, file);
                     st->fillStructuresFromFile(file);
-                    st->printHeap();
+                    st->printRbTr();
                     break;
                 } case '2' : {
                     int value;
                     cout << "Podaj wartosc: ";
                     cin.ignore();
                     cin >> value;
-                    st->testAddHeap(value);
+                    st->testAddRBTree(value);
                     break;
                 } case '3' : {
                     int value;
                     cout << "Podaj wartosc: ";
                     cin.ignore();
                     cin >> value;
-                    st->testFindValueHeap(value);
+                    st->testFindValueRBTr(value);
                     break;
                 } case '4' : {
-                    st->testDeleteFirstHeap();
+                    st->testDeleteFirstRBTr();
                     break;
                 }  case '5' : {
-                    st->printHeap();
+                    st->printRbTr();
                     break;
                 } case '6' : {
-                    d = false;
+                    e = false;
                     break;
                 }
                 }
             }//while testuj rbtree
             break;
         }//case 4
+        case '5' : {
+            while(f) {
+                cout << "\nTESTUJ WSZYSTKIE!" << endl;
+                cout << "\nWybierz opcje:\n\t[1]Wczytaj wartosci z pliku\n\t[2]Dodaj na poczatek\n\t[3]Dodaj na ...\n\t[4]Dodaj na koniec\n\t[5]Szukaj wartosci\n\t[6]Usun z poczatku\n\t[7]Usun z ...\n\t[8]Usun z konca\n\t[9]Pokaz tablice\n\t[a]Powrot do opcji\n\n";
+                cin >> w;
+                system("cls");
+                switch(w) {
+                case '1' : {
+                    string file;
+                    cout << "Podaj nazwe pliku: ";
+                    cin.ignore();
+                    getline(cin, file);
+                    st->fillStructuresFromFile(file);
+                    cout << "Tablica:\t";
+                    st->printDTab();
+                    cout << "\nKopiec:\t";
+                    st->printHeap();
+                    cout << "\nLista:\t";
+                    st->printList();
+                    cout << "\nDrzewo:\n";
+                    st->printRbTr();
+                    break;
+                } case '2' : {
+                    int value;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testAddAll(value);
+                    break;
+                } case '3' : {
+                    int value, index;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    cin.ignore();
+                    cout << "Podaj index: ";
+                    cin >> index;
+                    st->testAddAtIndexAll(value, index);
+                    break;
+                } case '4' : {
+                    int value;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testAddAtEndAll(value);
+                    break;
+                } case '5' : {
+                    int value;
+                    cout << "Podaj wartosc: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testFindValueAll(value);
+                    break;
+                } case '6' : {
+                    st->testDeleteFirstAll();
+                    break;
+                } case '7' : {
+                    int value;
+                    cout << "Podaj index: ";
+                    cin.ignore();
+                    cin >> value;
+                    st->testDeleteAtIndexAll(value);
+                    break;
+                } case '8' : {
+                    st->testDeleteLastAll();
+                    break;
+                } case '9' : {
+                    cout << "Tablica:\t";
+                    st->printDTab();
+                    cout << "\nKopiec:\t";
+                    st->printHeap();
+                    cout << "\nLista:\t";
+                    st->printList();
+                    cout << "\nDrzewo:\n";
+                    st->printRbTr();
+                    break;
+                } case 'a' : {
+                    f = false;
+                    break;
+                }
+                }
+            }//while testuj tablice
+            break;
+        }//case 5
         case '6' : {
             a=false;
             break;

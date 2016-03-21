@@ -63,6 +63,25 @@ void RBTree::printRBT(string sp, string sn, RBTNode * p)
   }
 }
 
+void RBTree::printRBTtoFile(string sp, string sn, RBTNode * p, ofstream &str)
+{
+  string t;
+
+  if(p != &S)
+  {
+    t = sp;
+    if(sn == cr) t[t.length() - 2] = ' ';
+    printRBT(t+cp,cr,p->right);
+
+    t = t.substr(0,sp.length()-2);
+    str << t << sn << p->color << ":" << p->key << endl;
+
+    t = sp;
+    if(sn == cl) t[t.length() - 2] = ' ';
+    printRBT(t+cp,cl,p->left);
+  }
+}
+
 RBTNode* RBTree::getRoot() {return root;}
 
 // Wypisuje zawartoœæ drzewa
@@ -72,11 +91,15 @@ void RBTree::print()
   printRBT("","",root);
 }
 
+void RBTree::print(ofstream &str) {
+    printRBTtoFile("","",root,str);
+}
+
 // Wyszukuje wêze³ o kluczu k
 // Jeœli wêze³ nie zostanie znaleziony, to zwraca
 // wskazanie puste NULL
 //-----------------------------------------------
-RBTNode * RBTree::findRBT(int k)
+int RBTree::findRBT(int k)
 {
   RBTNode * p;
 
@@ -85,7 +108,7 @@ RBTNode * RBTree::findRBT(int k)
     if(k < p->key) p = p->left;
     else           p = p->right;
   if(p == &S) return NULL;
-  return p;
+  return p->key;
 }
 
 // Wyszukuje najmniejszy wêze³ w poddrzewie

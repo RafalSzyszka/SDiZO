@@ -3,6 +3,7 @@
 
 #include "RBTNode.h"
 #include <string>
+#include <fstream>
 
 using namespace std;
 class RBTree
@@ -19,7 +20,7 @@ class RBTree
         ~RBTree();            // Destruktor klasy
         void DFSRelease(RBTNode * p); // Usuwa rekurencyjnie drzewo
         void print();          // Wypisuje drzewo
-        RBTNode * findRBT(int k); // Wyszukuje wêze³ o kluczu k
+        int findRBT(int k); // Wyszukuje wêze³ o kluczu k
         RBTNode * minRBT(RBTNode * p); // Wyszukuje najmniejszy wêze³ w p
         RBTNode * succRBT(RBTNode * p);// Wyszukuje nastêpnik p
         void rot_L(RBTNode * A); // Rotacja w lewo wzglêdem A
@@ -28,6 +29,8 @@ class RBTree
         void removeRBT(RBTNode * X); // Usuwa wêze³ X
         RBTree* initFromFile(string);
         RBTNode* getRoot();
+        void print(ofstream&);
+        void printRBTtoFile(string, string, RBTNode*, ofstream&);
 };
 
 
